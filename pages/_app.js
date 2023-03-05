@@ -1,4 +1,6 @@
+import QueryWrapper from "@/components/QueryWrapper";
 import "@/styles/globals.css";
+
 import { SessionProvider } from "next-auth/react";
 
 export default function App({
@@ -7,7 +9,9 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <QueryWrapper>
+        <Component {...pageProps} />
+      </QueryWrapper>
     </SessionProvider>
   );
 }

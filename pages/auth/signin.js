@@ -15,7 +15,7 @@ export default function Signin() {
       redirect: false,
       email: data.email,
       password: data.password,
-      callbackUrl: "/",
+      callbackUrl: "http://localhost:3000",
     });
 
     if (status.ok) router.push(status.url);

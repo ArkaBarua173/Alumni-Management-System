@@ -18,6 +18,10 @@ export const authOptions = {
 
     CredentialsProvider({
       name: "credentials",
+      credentials: {
+        email: {},
+        password: {},
+      },
       secret: process.env.AUTH_SECRET,
       async authorize(credentials, req) {
         const { email, password } = credentials;
@@ -42,10 +46,48 @@ export const authOptions = {
   pages: {
     signIn: "/auth/signin",
   },
-  secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user && user.id && user.role) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && token.id && token.role) {
+        session.id = token.id;
+        session.role = token.role;
+      }
+      return session;
+    },
+  },
+
   // session: {
-  //   jwt: true,
-  //   maxAge: 30 * 24 * 60 * 60,
+  //   strategy: "database",
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
   // },
+  // callbacks: {
+  //   jwt: async ({ token, user }) => {
+  //     // First time JWT callback is run, user object is available
+  //     if (user && user.id && user.role) {
+  //       token.id = user.id;
+  //       token.role = user.role;
+  //     }
+  //     return token;
+  //   },
+  //   session: async ({ session, token }) => {
+  //     if (token && token.id && token.role) {
+  //       session.id = token.id;
+  //       session.role = token.role;
+  //     }
+  //     return session;
+  //   },
+  // },
+  secret: process.env.AUTH_SECRET,
 };
+
 export default NextAuth(authOptions);
