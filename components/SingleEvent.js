@@ -11,9 +11,13 @@ export default function SingleEvent({ datum }) {
   console.log(formattedDate);
   return (
     <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl" key={id}>
-      <div className="card card-side bg-base-100 shadow-xl">
+      <div className="card lg:card-side bg-base-100 shadow-xl">
         <figure>
-          <img src={`/images/${banner}`} alt="Album" className="w-96" />
+          <img
+            src={`/images/${banner}`}
+            alt="Album"
+            className="lg:w-96 sm:max-w-full sm:w-full"
+          />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{title}</h2>

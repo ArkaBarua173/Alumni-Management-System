@@ -20,7 +20,8 @@ module.exports = {
 
           neutral: "#322833",
 
-          "base-100": "#EFF1F5",
+          // "base-100": "#EFF1F5",
+          "base-100": "#F2F2F2",
 
           info: "#45B9D3",
 
@@ -33,5 +34,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [require("@tailwindcss/forms"), require("daisyui")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/line-clamp"),
+    require("daisyui"),
+  ],
 };

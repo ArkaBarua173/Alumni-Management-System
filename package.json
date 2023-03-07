@@ -29,6 +29,9 @@
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@dicebear/collection": "^5.3.4",
+    "@dicebear/core": "^5.3.4",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
     "react-icons": "^4.7.1",

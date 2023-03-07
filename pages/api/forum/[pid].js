@@ -4,11 +4,22 @@ export default async function handler(req, res) {
   // res.status(200).json({ name: 'John Doe' })
   if (req.method !== "GET")
     return res.status(405).json({ message: "Method not allowed" });
-  const { eid } = req.query;
+  const { pid } = req.query;
   try {
-    const data = await prisma.event.findUnique({
+    const data = await prisma.topic.findUnique({
       where: {
-        id: eid,
+        id: pid,
+      },
+      include: {
+        user: true,
+        comments: {
+          orderBy: {
+            createdAt: "desc",
+          },
+          include: {
+            user: true,
+          },
+        },
       },
     });
     res.status(200).json({ data });

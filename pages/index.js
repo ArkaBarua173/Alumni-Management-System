@@ -1,7 +1,41 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { format, parseISO } from "date-fns";
+
+const getEvents = async () => {
+  const response = await axios.get(`http://localhost:3000/api/events/eventhm`);
+  return response.data.data;
+};
+
+const getTopics = async () => {
+  const response = await axios.get(`http://localhost:3000/api/forum/forumhm`);
+  return response.data.data;
+};
 
 export default function Home() {
+  const {
+    isLoading: isEventLoading,
+    error: isEventError,
+    data: events,
+  } = useQuery({
+    queryKey: ["EventFetch"],
+    queryFn: getEvents,
+  });
+
+  const {
+    isLoading: isTopicLoading,
+    error: isTopicError,
+    data: topics,
+  } = useQuery({
+    queryKey: ["TopicFetch"],
+    queryFn: getTopics,
+  });
+
+  console.log(events);
+
   return (
     <>
       <Head>
@@ -11,7 +45,141 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main>HomePage</main>
+        {/* <main>HomePage</main> */}
+        <div
+          className="hero min-h-screen"
+          style={{
+            backgroundImage: `url("/assets/Nstu_logo1.jpg")`,
+          }}
+        >
+          <div className="hero-overlay bg-opacity-60"></div>
+          <div className="hero-content text-center text-neutral-content">
+            <div className="max-w-lg flex flex-col">
+              <h1 className="mb-5 text-5xl font-bold">
+                Welcome To Alumni Management System
+              </h1>
+              <p className="mb-5 max-w-md">
+                Provident cupiditate voluptatem et in. Quaerat fugiat ut
+                assumenda excepturi exercitationem quasi. In deleniti eaque aut
+                repudiandae et a id nisi.
+              </p>
+              <div className="flex gap-4 items-center self-center">
+                <Link
+                  href="/auth/register"
+                  className="btn btn-primary no-animation"
+                >
+                  Create Account
+                </Link>
+                <Link
+                  href="/auth/signin"
+                  className="btn btn-primary no-animation"
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Events */}
+        <h1 className="m-4 p-8 text-4xl text-center font-bold">
+          Upcoming Event
+        </h1>
+        <div className="carousel w-full">
+          {events?.map((datum) => (
+            <div
+              id={`${datum?.id}`}
+              className="carousel-item w-full"
+              key={datum?.id}
+            >
+              <div className="flex xs:flex-col">
+                <img src={`/images/${datum?.banner}`} className="w-full h-96" />
+                <div className="p-12">
+                  <h2 className="text-3xl font-bold">{datum?.title}</h2>
+                  <p className="line-clamp-4 mt-4">{datum?.description}</p>
+                  <p>
+                    <strong>Date: </strong>
+                    {format(
+                      parseISO(datum?.date, new Date()),
+                      "do LLL, yyyy hh:mm aaa"
+                    )}
+                  </p>
+                  <div className="mt-8">
+                    <Link
+                      href={`/events/${datum?.id}`}
+                      className="btn btn-outline"
+                    >
+                      Expand
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center w-full p-4 mt-2 gap-2">
+          {events?.map((datum, key) => (
+            <a href={`#${datum?.id}`} className="btn btn-xs" key={datum?.id}>
+              {key + 1}
+            </a>
+          ))}
+        </div>
+        <div className="flex justify-between mt-6 rounded bg-base-200">
+          <div className="ml-8">
+            <h1 className="text-4xl font-bold p-8">Forum</h1>
+            <p className="ml-8 text-2xl font-semibold">
+              <Link href={"/auth/signin"} className="text-blue-500">
+                Login
+              </Link>{" "}
+              <p>to create new topics and comments</p>
+              <Link href="/forum" className="btn btn-outline no-animation mt-4">
+                Go to Forum Page
+              </Link>
+            </p>
+          </div>
+          <div className="basis-1/2 overflow-scroll h-96">
+            {topics?.map((topic) => (
+              <div className="my-4 card bg-base-100 text-sm " key={topic.id}>
+                <div className="card-body">
+                  <div className="flex gap-4">
+                    <div className="avatar">
+                      <div className="w-12 rounded-full">
+                        {/* <img
+                            src={datum?.user?.image || Avatar(datum?.user?.name)}
+                          /> */}
+                        <img
+                          src={topic?.user?.image || "/assets/user_profile.svg"}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h5 className="font-bold">{topic?.user?.name}</h5>
+                      <p>
+                        {format(
+                          parseISO(topic?.createdAt, new Date()),
+                          "do LLL, yyyy hh:mm aaa"
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <h2 className="card-title">{topic?.title}</h2>
+                  <p className="line-clamp-2">{topic?.details}</p>
+                  <div className="flex gap-4 items-center">
+                    <Link
+                      href={`/forum/${topic?.id}`}
+                      className="btn btn-outline btn-xs no-animation"
+                    >
+                      Open Discussion
+                    </Link>
+                    <p>{topic?.comments?.length} comments</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <footer className="bg-slate-900 text-white p-12 text-center">
+          <p>Copyright</p>
+        </footer>
       </Layout>
     </>
   );

@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/client";
 
 export default async function handler(req, res) {
   // res.status(200).json({ name: 'John Doe' })

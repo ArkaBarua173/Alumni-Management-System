@@ -1,15 +1,14 @@
 import prisma from "@/lib/client";
 
 export default async function handler(req, res) {
-  // res.status(200).json({ name: 'John Doe' })
   if (req.method !== "GET")
     return res.status(405).json({ message: "Method not allowed" });
-  const { eid } = req.query;
+
   try {
-    const data = await prisma.event.findUnique({
-      where: {
-        id: eid,
-      },
+    const data = await prisma.topic.findMany({
+      orderBy: { createdAt: "desc" },
+      include: { user: true, comments: true },
+      take: 3,
     });
     res.status(200).json({ data });
   } catch (err) {

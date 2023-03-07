@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import Loading from "./Loading";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -9,7 +11,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-300 ">
+    <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -33,19 +35,20 @@ export default function Navbar() {
             className="menu menu-compact dropdown-content mt-5 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Home</a>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <a>Forum</a>
+              <Link href="/forum">Forum</Link>
             </li>
             <li>
-              <a>Events</a>
+              <Link href="/events">Events</Link>
             </li>
           </ul>
         </div>
-        <a className="flex gap-3 ml-2 cursor-pointer normal-case text-xl">
+        <div className="flex gap-3 ml-2 cursor-pointer normal-case text-xl">
           <span>
             <Image
+              // loader={Loading}
               src={"/assets/nstu_logo.png"}
               width={40}
               height={40}
@@ -56,18 +59,24 @@ export default function Navbar() {
             <h1>NSTU</h1>
             <h1>AlumniMS</h1>
           </div>
-        </a>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 ">
           <li>
-            <a className="font-bold">Home</a>
+            <Link href="/" className="font-bold">
+              Home
+            </Link>
           </li>
           <li>
-            <a className="font-bold">Forum</a>
+            <Link href="/forum" className="font-bold">
+              Forum
+            </Link>
           </li>
           <li>
-            <a className="font-bold">Events</a>
+            <Link href="/events" className="font-bold">
+              Events
+            </Link>
           </li>
         </ul>
       </div>

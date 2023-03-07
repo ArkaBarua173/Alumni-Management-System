@@ -3,15 +3,13 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import path from "path";
 import fs from "fs/promises";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/client";
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
-const prisma = new PrismaClient();
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
