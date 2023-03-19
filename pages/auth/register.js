@@ -1,7 +1,11 @@
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Register() {
+  const [show, setShow] = useState(false);
   const { register, handleSubmit } = useForm();
 
   const router = useRouter();
@@ -61,7 +65,7 @@ export default function Register() {
           >
             Password
           </label>
-          <div className="mt-1">
+          <div className="relative mt-1">
             <input
               id="password"
               type="password"
@@ -69,6 +73,16 @@ export default function Register() {
               className="w-full border-gray-300 rounded-lg shadow-sm"
               {...register("password")}
             />
+            <span
+              className="absolute top-2 right-0 icon flex items-center px-4 cursor-pointer"
+              onClick={() => setShow(!show)}
+            >
+              {show ? (
+                <FaEye size={25} color={"gray"} />
+              ) : (
+                <FaEyeSlash size={25} color={"gray"} />
+              )}
+            </span>
           </div>
           <label
             htmlFor="cPassword"
@@ -76,7 +90,7 @@ export default function Register() {
           >
             Confirm Password
           </label>
-          <div className="mt-1">
+          <div className="relative mt-1">
             <input
               id="cPassword"
               type="password"
@@ -84,6 +98,16 @@ export default function Register() {
               className="w-full border-gray-300 rounded-lg shadow-sm"
               // {...register("cPassword")}
             />
+            <span
+              className="absolute top-2 right-0 icon flex items-center px-4 cursor-pointer"
+              onClick={() => setShow(!show)}
+            >
+              {show ? (
+                <FaEye size={25} color={"gray"} />
+              ) : (
+                <FaEyeSlash size={25} color={"gray"} />
+              )}
+            </span>
           </div>
           <div>
             <button
@@ -97,4 +121,19 @@ export default function Register() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  return {
+    props: { session },
+  };
 }

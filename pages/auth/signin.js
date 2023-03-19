@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -93,4 +93,19 @@ export default function Signin() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  return {
+    props: { session },
+  };
 }
