@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Loading from "@/components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
@@ -19,19 +20,19 @@ export default function Events() {
   // const { id, title, date, description, banner } = data?.data;
 
   if (error) return error;
-  if (isLoading) return "Loading";
+  if (isLoading) return <Loading />;
 
   console.log(data);
 
   return (
     <Layout>
-      <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl">
+      <div className="my-10 sm:mx-auto sm:w-full sm:max-w-6xl">
         <div className="card bg-base-100 shadow-xl">
           <figure>
             <img
               src={`/images/${data?.data?.banner}`}
               alt="event banner"
-              className="w-full h-64 object-fill"
+              className="w-full h-96 object-cover"
             />
           </figure>
           <div className="card-body">

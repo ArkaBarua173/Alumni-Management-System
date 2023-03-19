@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import Loading from "./Loading";
+// import Loading from "./Loading";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -11,7 +11,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-accent text-primary-content">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -32,7 +32,7 @@ export default function Navbar() {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-5 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-5 p-2 shadow bg-primary rounded-box w-52"
           >
             <li>
               <Link href="/">Home</Link>
@@ -45,37 +45,48 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <div className="flex gap-3 ml-2 cursor-pointer normal-case text-xl">
+        <div className="flex gap-3 ml-2 cursor-pointer normal-case text-xl ">
           <span>
             <Image
-              // loader={Loading}
               src={"/assets/nstu_logo.png"}
-              width={40}
-              height={40}
+              width={37}
+              height={37}
               alt={"Nstu logo"}
             />
           </span>
           <div className="font-bold pt-3">
-            <h1>NSTU</h1>
-            <h1>AlumniMS</h1>
+            <h1 className="text-xs">
+              Noakhali Science and Technology University
+            </h1>
+            <h1 className="text-lg">Alumni Management System</h1>
           </div>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 ">
+        <ul className="menu menu-horizontal px-1 gap-x-2">
           <li>
-            <Link href="/" className="font-bold">
+            <Link href="/" className="font-bold active:bg-neutral">
               Home
             </Link>
           </li>
           <li>
-            <Link href="/forum" className="font-bold">
+            <Link href="/forum" className="font-bold active:bg-neutral">
               Forum
             </Link>
           </li>
           <li>
-            <Link href="/events" className="font-bold">
+            <Link href="/events" className="font-bold active:bg-neutral">
               Events
+            </Link>
+          </li>
+          <li>
+            <Link href="/events" className="font-bold active:bg-neutral">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link href="/events" className="font-bold active:bg-neutral">
+              Contact
             </Link>
           </li>
         </ul>
@@ -95,7 +106,7 @@ export default function Navbar() {
             </label>
             <ul
               tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-primary rounded-box w-52"
             >
               <li>
                 <a href="/auth/signin">Login</a>
@@ -120,10 +131,15 @@ export default function Navbar() {
             </label>
             <ul
               tabIndex={0}
-              className="mt-5 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-5 p-2 shadow menu menu-compact dropdown-content bg-primary rounded-box w-52"
             >
               <li>
-                <a className="justify-between">Profile</a>
+                <Link
+                  className="justify-between active:bg-neutral"
+                  href={"/profile"}
+                >
+                  Profile
+                </Link>
               </li>
               <li>
                 <a onClick={handleSignOut}>Logout</a>

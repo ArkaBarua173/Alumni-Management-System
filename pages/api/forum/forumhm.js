@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     const data = await prisma.topic.findMany({
       orderBy: { createdAt: "desc" },
       include: { user: true, comments: true },
-      take: 3,
     });
     res.status(200).json({ data });
   } catch (err) {

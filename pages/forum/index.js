@@ -5,6 +5,7 @@ import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { createAvatar } from "@dicebear/core";
 import { initials } from "@dicebear/collection";
+import Loading from "@/components/Loading";
 
 const getTopics = async () => {
   const response = await axios.get("http://localhost:3000/api/forum");
@@ -17,6 +18,7 @@ export default function Forum() {
     queryKey: ["topics"],
   });
   if (error) return error;
+  if (isLoading) return <Loading />;
 
   // const Avatar = async (seed) => {
   //   console.log(seed);
@@ -31,12 +33,12 @@ export default function Forum() {
 
   return (
     <Layout>
-      {isLoading ?? <h1 className="text-xl">Loading</h1>}
+      {/* {isLoading ?? <h1 className="text-5xl w-full text-center">Loading</h1>} */}
       <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl">
         <div className="flex justify-between mb-4">
           <h1 className="text-lg font-bold">Forum</h1>
-          <Link className="btn" href={"/forum/create"}>
-            Start a new Topic
+          <Link className="btn btn-outline no-animation" href={"/forum/create"}>
+            Start a new discussion
           </Link>
         </div>
         {data?.map((datum) => (
@@ -50,6 +52,7 @@ export default function Forum() {
                     /> */}
                     <img
                       src={datum?.user?.image || "/assets/user_profile.svg"}
+                      referrerpolicy="no-referrer"
                     />
                   </div>
                 </div>
@@ -72,7 +75,7 @@ export default function Forum() {
                 >
                   Open Discussion
                 </Link>
-                <p>{datum?.comments.length} comments</p>
+                <p className="font-bold">{datum?.comments.length} comments</p>
               </div>
             </div>
           </div>

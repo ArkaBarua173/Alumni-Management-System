@@ -1,3 +1,5 @@
+const plugin = require("@tailwindcss/forms/src");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,33 +12,35 @@ module.exports = {
   },
   daisyui: {
     themes: [
-      {
-        mytheme: {
-          primary: "#7536b5",
+      "lofi",
+      // {
+      //   mytheme: {
+      //     primary: "#7536b5",
 
-          secondary: "#ffa3c3",
+      //     secondary: "#ffa3c3",
 
-          accent: "#d1c330",
+      //     accent: "#d1c330",
 
-          neutral: "#322833",
+      //     neutral: "#322833",
 
-          // "base-100": "#EFF1F5",
-          "base-100": "#F2F2F2",
+      //     // "base-100": "#EFF1F5",
+      //     "base-100": "#F2F2F2",
 
-          info: "#45B9D3",
+      //     info: "#45B9D3",
 
-          success: "#3ED0BA",
+      //     success: "#3ED0BA",
 
-          warning: "#F1D546",
+      //     warning: "#F1D546",
 
-          error: "#E92B2B",
-        },
-      },
+      //     error: "#E92B2B",
+      //   },
+      // },
     ],
   },
   plugins: [
     require("@tailwindcss/forms"),
     require("@tailwindcss/line-clamp"),
     require("daisyui"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
   ],
 };

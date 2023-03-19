@@ -45,7 +45,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {/* <main>HomePage</main> */}
         <div
           className="hero min-h-screen"
           style={{
@@ -53,26 +52,26 @@ export default function Home() {
           }}
         >
           <div className="hero-overlay bg-opacity-60"></div>
-          <div className="hero-content text-center text-neutral-content">
+          <div className="hero-content text-center text-white">
             <div className="max-w-lg flex flex-col">
-              <h1 className="mb-5 text-5xl font-bold">
-                Welcome To Alumni Management System
+              <h1 className="mb-5 text-5xl font-bold ">
+                Welcome To NSTU Alumni Management System
               </h1>
               <p className="mb-5 max-w-md">
                 Provident cupiditate voluptatem et in. Quaerat fugiat ut
                 assumenda excepturi exercitationem quasi. In deleniti eaque aut
                 repudiandae et a id nisi.
               </p>
-              <div className="flex gap-4 items-center self-center">
+              <div className="flex gap-4 items-center self-center ">
                 <Link
                   href="/auth/register"
-                  className="btn btn-primary no-animation"
+                  className="btn btn-outline no-animation text-white"
                 >
                   Create Account
                 </Link>
                 <Link
                   href="/auth/signin"
-                  className="btn btn-primary no-animation"
+                  className="btn btn-outline no-animation text-white"
                 >
                   Login
                 </Link>
@@ -95,8 +94,10 @@ export default function Home() {
                 <img src={`/images/${datum?.banner}`} className="w-full h-96" />
                 <div className="p-12">
                   <h2 className="text-3xl font-bold">{datum?.title}</h2>
-                  <p className="line-clamp-4 mt-4">{datum?.description}</p>
-                  <p>
+                  <p className="line-clamp-4 mt-4 text-lg font-semibold">
+                    {datum?.description}
+                  </p>
+                  <p className="mt-3 font-semibold">
                     <strong>Date: </strong>
                     {format(
                       parseISO(datum?.date, new Date()),
@@ -123,22 +124,22 @@ export default function Home() {
             </a>
           ))}
         </div>
-        <div className="flex justify-between mt-6 rounded bg-base-200">
-          <div className="ml-8">
-            <h1 className="text-4xl font-bold p-8">Forum</h1>
-            <p className="ml-8 text-2xl font-semibold">
+        <div className="flex justify-between mt-6 rounded bg-base-300">
+          <div className="ml-8 self-center">
+            <h1 className="text-6xl font-bold pl-7 pb-4">Forum</h1>
+            <div className="ml-8 text-3xl font-semibold">
               <Link href={"/auth/signin"} className="text-blue-500">
                 Login
               </Link>{" "}
               <p>to create new topics and comments</p>
               <Link href="/forum" className="btn btn-outline no-animation mt-4">
-                Go to Forum Page
+                Start a new discussion
               </Link>
-            </p>
+            </div>
           </div>
-          <div className="basis-1/2 overflow-scroll h-96">
+          <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height">
             {topics?.map((topic) => (
-              <div className="my-4 card bg-base-100 text-sm " key={topic.id}>
+              <div className="my-4 card bg-base-100 text-sm" key={topic.id}>
                 <div className="card-body">
                   <div className="flex gap-4">
                     <div className="avatar">
@@ -148,6 +149,7 @@ export default function Home() {
                           /> */}
                         <img
                           src={topic?.user?.image || "/assets/user_profile.svg"}
+                          referrerpolicy="no-referrer"
                         />
                       </div>
                     </div>
@@ -170,7 +172,9 @@ export default function Home() {
                     >
                       Open Discussion
                     </Link>
-                    <p>{topic?.comments?.length} comments</p>
+                    <p className="font-bold">
+                      {topic?.comments?.length} comments
+                    </p>
                   </div>
                 </div>
               </div>
@@ -178,7 +182,7 @@ export default function Home() {
           </div>
         </div>
         <footer className="bg-slate-900 text-white p-12 text-center">
-          <p>Copyright</p>
+          <p>Copyright © 2023 NSTU. All rights reserved</p>
         </footer>
       </Layout>
     </>

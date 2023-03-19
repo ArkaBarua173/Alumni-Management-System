@@ -52,8 +52,10 @@ export default function Create() {
   return (
     <Layout>
       <div className="my-10 md:w-11/12 md:max-w-5xl sm:mx-auto sm:w-full sm:max-w-md ">
-        <h1 className="my-3 text-center text-lg font-bold">Create New Topic</h1>
-        <div className="py-8 px-6 shadow rounded-lg sm:px-10 bg-slate-200">
+        <h1 className="mb-8 text-center text-lg font-bold">
+          Create New Discussion
+        </h1>
+        <div className="py-4 px-6 shadow rounded-lg sm:px-10 bg-slate-200">
           <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <label
               htmlFor="title"
@@ -70,17 +72,17 @@ export default function Create() {
                 {...register("title")}
               />
               <p
-                className={`font-bold text-sm mt-2 ${
-                  watch("title").length > 100 ? "text-red-700" : "text-gray-700"
+                className={`font-bold text-sm mt-2 ml-1 ${
+                  watch("title").length > 200 ? "text-red-700" : "text-gray-700"
                 }`}
-              >{`${watch("title").length}/100`}</p>
+              >{`${watch("title").length}/200`}</p>
               <p className="text-red-700 ml-1 mt-1">{errors.title?.message}</p>
             </div>
             <label
               htmlFor="details"
               className="block text-sm font-medium text-gray-700"
             >
-              Description
+              Details
             </label>
             <div className="mt-1">
               <textarea
@@ -91,7 +93,7 @@ export default function Create() {
                 {...register("details")}
               ></textarea>
               <p
-                className={`font-bold text-sm mt-2 ${
+                className={`font-bold text-sm ml-1 mt-2 ${
                   watch("details").length > 1000
                     ? "text-red-700"
                     : "text-gray-700"
@@ -105,9 +107,9 @@ export default function Create() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center py-2 px-4 btn no-animation text-white"
               >
-                Create
+                Create a new discussion
               </button>
             </div>
           </form>

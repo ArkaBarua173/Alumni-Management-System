@@ -57,28 +57,28 @@ export default function TopicId() {
 
   return (
     <Layout>
-      <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl">
+      <div className="my-8 sm:mx-auto sm:w-full sm:max-w-6xl">
         <div className="card bg-base-200 shadow-xl">
           <div className="card-body">
             <h2 className="text-4xl font-bold">{data?.title}</h2>
             <p>{data?.details}</p>
             <div className="mt-2 flex gap-3">
-              <p>{data?.comments?.length} comments</p>
+              <p className="font-bold">{data?.comments?.length} comments</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 card bg-base-200 shadow-xl">
+        <div className="mt-8 card bg-base-200 shadow-xl">
           <div className="card-body">
             <h2 className="ml-2 font-semibold">Add a Comment</h2>
-            <form className="my-8" onSubmit={handleSubmit(onSubmit)}>
-              <input
+            <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
+              <textarea
                 id="comment"
                 type="text"
                 required
                 className="w-full border-gray-300 rounded-lg shadow-sm"
                 {...register("comment")}
-              />
+              ></textarea>
               <button type="submit" className="btn mt-3" disabled={isDisabled}>
                 Add Comment
               </button>
