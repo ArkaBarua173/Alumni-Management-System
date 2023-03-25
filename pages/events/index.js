@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Loading from "@/components/Loading";
 import SingleEvent from "@/components/SingleEvent";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -14,7 +15,7 @@ export default function Events() {
     queryKey: ["events"],
   });
   if (error) return error;
-  if (isLoading) return "Loading";
+  if (isLoading) return <Loading />;
   console.log(data);
 
   return (
