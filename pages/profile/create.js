@@ -9,7 +9,6 @@ import Loading from "@/components/Loading";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
-import prisma from "@/lib/client";
 
 const schema = yup.object().shape({
   username: yup.string().required(),
@@ -80,9 +79,6 @@ export default function Create() {
 
   const watchJobStatus = watch("jobStatus");
 
-  // const time = format(new Date(), "y-LL");
-  // console.log(time);
-
   useEffect(() => {
     if (watchJobStatus === "EMPLOYED") {
       register("designation");
@@ -109,6 +105,7 @@ export default function Create() {
     setIsDisabled(false);
     console.log(degrees);
   };
+
   const onSubmit = async (data) => {
     console.log(data);
     mutate(data);
@@ -222,7 +219,7 @@ export default function Create() {
               <p className="text-red-700 ml-1 mt-1">{errors.degree?.message}</p>
             </div>
             <label
-              htmlFor="joiningDate"
+              htmlFor="resultPublishedDate"
               className="block text-sm font-medium text-gray-700"
             >
               Result Published Date
