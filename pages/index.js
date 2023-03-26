@@ -3,7 +3,9 @@ import Layout from "@/components/layout";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
+import SingleForum from "@/components/SingleForum";
+import Loading from "@/components/Loading";
+import CarouselEvent from "@/components/CarouselEvent";
 
 const getEvents = async () => {
   const response = await axios.get(`http://localhost:3000/api/events/eventhm`);
@@ -34,7 +36,8 @@ export default function Home() {
     queryFn: getTopics,
   });
 
-  console.log(events);
+  if (isEventError) return isEventError;
+  if (isTopicError) return isTopicError;
 
   return (
     <>
@@ -90,30 +93,8 @@ export default function Home() {
               className="carousel-item w-full"
               key={datum?.id}
             >
-              <div className="flex xs:flex-col">
-                <img src={`/images/${datum?.banner}`} className="w-full h-96" />
-                <div className="p-12">
-                  <h2 className="text-3xl font-bold">{datum?.title}</h2>
-                  <p className="line-clamp-4 mt-4 text-lg font-semibold">
-                    {datum?.description}
-                  </p>
-                  <p className="mt-3 font-semibold">
-                    <strong>Date: </strong>
-                    {format(
-                      parseISO(datum?.date, new Date()),
-                      "do LLL, yyyy hh:mm aaa"
-                    )}
-                  </p>
-                  <div className="mt-8">
-                    <Link
-                      href={`/events/${datum?.id}`}
-                      className="btn btn-outline"
-                    >
-                      Expand
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              {isEventLoading && <Loading />}
+              <CarouselEvent datum={datum} />
             </div>
           ))}
         </div>
@@ -140,43 +121,8 @@ export default function Home() {
           <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height">
             {topics?.map((topic) => (
               <div className="my-4 card bg-base-100 text-sm" key={topic.id}>
-                <div className="card-body">
-                  <div className="flex gap-4">
-                    <div className="avatar">
-                      <div className="w-12 rounded-full">
-                        {/* <img
-                            src={datum?.user?.image || Avatar(datum?.user?.name)}
-                          /> */}
-                        <img
-                          src={topic?.user?.image || "/assets/user_profile.svg"}
-                          referrerpolicy="no-referrer"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-bold">{topic?.user?.name}</h5>
-                      <p>
-                        {format(
-                          parseISO(topic?.createdAt, new Date()),
-                          "do LLL, yyyy hh:mm aaa"
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                  <h2 className="card-title">{topic?.title}</h2>
-                  <p className="line-clamp-2">{topic?.details}</p>
-                  <div className="flex gap-4 items-center">
-                    <Link
-                      href={`/forum/${topic?.id}`}
-                      className="btn btn-outline btn-xs no-animation"
-                    >
-                      Open Discussion
-                    </Link>
-                    <p className="font-bold">
-                      {topic?.comments?.length} comments
-                    </p>
-                  </div>
-                </div>
+                {isTopicLoading && <Loading />}
+                <SingleForum topic={topic} />
               </div>
             ))}
           </div>
