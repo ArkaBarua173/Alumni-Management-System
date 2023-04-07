@@ -3,6 +3,8 @@ import Loading from "@/components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
+import { sanitize } from "dompurify";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function Events() {
@@ -10,45 +12,43 @@ export default function Events() {
   const { eid } = query;
   const getEvent = async () => {
     const response = await axios.get(`http://localhost:3000/api/events/${eid}`);
-    return response.data;
+    return response.data.data;
   };
   const { isLoading, error, data } = useQuery({
     queryKey: ["eventData"],
     queryFn: getEvent,
   });
 
-  // const { id, title, date, description, banner } = data?.data;
-
   if (error) return error;
   if (isLoading) return <Loading />;
 
-  console.log(data);
-
   return (
     <Layout>
+      {isLoading && <Loading />}
       <div className="my-10 sm:mx-auto sm:w-full sm:max-w-6xl">
-        <div className="card bg-base-100 shadow-xl">
-          <figure>
-            <img
-              src={`/images/${data?.data?.banner}`}
+        <div className="card bg-base-100 shadow-xl rounded-md">
+          <figure className="w-full h-80 object-cover relative">
+            <Image
+              fill
+              src={`/images/${data?.banner}`}
               alt="event banner"
-              className="w-full h-96 object-cover"
+              className="object-cover"
             />
           </figure>
-          <div className="card-body">
-            <h2 className="text-4xl font-bold">{data?.data?.title}</h2>
+          <div className="card-body bg-base-300">
+            <h2 className="text-4xl font-bold">{data?.title}</h2>
             <p className="text-xl">
               <strong>Date: </strong>
-              {format(
-                parseISO(data?.data?.date, new Date()),
-                "do LLL, yyyy hh:mm aaa"
-              )}
+              {data?.date &&
+                format(
+                  parseISO(data?.date, new Date()),
+                  "do LLL, yyyy hh:mm aaa"
+                )}
             </p>
-            <p>{data?.data?.description}</p>
-
-            {/* <div className="card-actions justify-end">
-              <button className="btn btn-primary">Listen</button>
-            </div> */}
+            <div
+              className="mt-8 no-tailwindcss-base"
+              dangerouslySetInnerHTML={{ __html: sanitize(data?.description) }}
+            ></div>
           </div>
         </div>
       </div>
