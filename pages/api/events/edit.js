@@ -12,12 +12,13 @@ export const config = {
 };
 
 const handler = async (req, res) => {
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     const session = await getServerSession(req, res, authOptions);
     if (!session || session?.role !== "ADMIN")
       return res
         .status(401)
         .json({ message: "Only Admin can create an event" });
+
     try {
       await fs.readdir(path.join(process.cwd() + "/public", "/images"));
     } catch (error) {
@@ -36,7 +37,9 @@ const handler = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
         return;
       }
-      const { title, date, description } = fields;
+
+      console.log(files);
+      const { id, title, date, description, oldBanner } = fields;
       const formattedDate = new Date(date);
       const dstr = formattedDate.toISOString();
       const user = await prisma.user.findUnique({
@@ -44,8 +47,24 @@ const handler = async (req, res) => {
           email: session?.user?.email,
         },
       });
+
+      if (session?.id !== user?.id)
+        res
+          .status(500)
+          .json({ message: "Only creater of the event can update the event" });
+
+      const filePath = path.join(process.cwd(), "public", "images", oldBanner);
+
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ message: "Error deleting previous image" });
+        }
+      });
+
       try {
-        const createdEvent = await prisma.event.create({
+        const updatedEvent = await prisma.event.update({
+          where: { id },
           data: {
             title,
             date: dstr,
@@ -54,11 +73,11 @@ const handler = async (req, res) => {
             banner: files.banner.newFilename,
           },
         });
-        res.status(201).json({ createdEvent });
+        res.status(201).json({ updatedEvent });
       } catch (err) {
         res
           .status(403)
-          .json({ err: "Error has occured while making the event" });
+          .json({ err: "Error has occured while updating the event" });
       }
     });
   }
