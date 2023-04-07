@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     });
     const data = await prisma.profile.findUnique({
       where: { userId: user?.id },
-      include: { degree: true },
+      include: { degree: true, user: true },
     });
     res.status(200).json({ data });
   } catch (err) {
