@@ -4,7 +4,7 @@ import DegreeForm from "@/components/Profile/DegreeForm";
 import JobForm from "@/components/Profile/JobForm";
 import UserProfileLayout from "@/components/UserProfileLayout";
 
-export default function Profile() {
+export default function Info() {
   return (
     <>
       <UserProfileLayout>
