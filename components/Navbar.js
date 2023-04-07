@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useMemo } from "react";
+import { createAvatar } from "@dicebear/core";
+import { initials } from "@dicebear/collection";
 // import Loading from "./Loading";
 
 export default function Navbar() {
@@ -10,8 +13,15 @@ export default function Navbar() {
     signOut();
   }
 
+  const avatar = useMemo(() => {
+    return createAvatar(initials, {
+      size: 128,
+      seed: session?.name,
+    }).toDataUriSync();
+  }, []);
+
   return (
-    <div className="navbar bg-accent text-primary-content">
+    <div className="navbar bg-base-300 sticky top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -32,7 +42,7 @@ export default function Navbar() {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-5 p-2 shadow bg-primary rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-5 p-2 shadow bg-base-300 rounded-box w-52"
           >
             <li>
               <Link href="/">Home</Link>
@@ -43,15 +53,25 @@ export default function Navbar() {
             <li>
               <Link href="/events">Events</Link>
             </li>
+            <li>
+              <Link href="/gallery">Gallery</Link>
+            </li>
+            <li>
+              <Link href="/events">About</Link>
+            </li>
+            <li>
+              <Link href="/events">Contact</Link>
+            </li>
           </ul>
         </div>
         <div className="flex gap-3 ml-2 cursor-pointer normal-case text-xl ">
           <span>
             <Image
-              src={"/assets/nstu_logo.png"}
+              src={"/assets/nstu_logo.svg"}
               width={37}
               height={37}
               alt={"Nstu logo"}
+              className="text-white"
             />
           </span>
           <div className="font-bold pt-3">
@@ -62,10 +82,10 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar hidden lg:flex lg:justify-end">
         <ul className="menu menu-horizontal px-1 gap-x-2">
           <li>
-            <Link href="/" className="font-bold active:bg-neutral">
+            <Link href="/" className="font-bold">
               Home
             </Link>
           </li>
@@ -80,6 +100,11 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
+            <Link href="/gallery" className="font-bold active:bg-neutral">
+              Gallery
+            </Link>
+          </li>
+          <li>
             <Link href="/events" className="font-bold active:bg-neutral">
               About
             </Link>
@@ -91,7 +116,7 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end lg:justify-end lg:w-auto">
         {status === "unauthenticated" ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -120,18 +145,26 @@ export default function Navbar() {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                {/* <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" /> */}
-                <Image
-                  src={session?.user.image || "/assets/user_profile.svg"}
-                  width={100}
-                  height={100}
-                  alt={"User image"}
-                />
+                {status === "authenticated" ? (
+                  <Image
+                    src={session?.user.image || avatar}
+                    width={100}
+                    height={100}
+                    alt={"User image"}
+                  />
+                ) : (
+                  <Image
+                    src={"/assets/user_profile.svg"}
+                    width={100}
+                    height={100}
+                    alt={"User image"}
+                  />
+                )}
               </div>
             </label>
             <ul
               tabIndex={0}
-              className="mt-5 p-2 shadow menu menu-compact dropdown-content bg-primary rounded-box w-52"
+              className="mt-5 p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52"
             >
               <li>
                 <Link
@@ -141,6 +174,16 @@ export default function Navbar() {
                   Profile
                 </Link>
               </li>
+              {session?.role === "ADMIN" && (
+                <li>
+                  <Link
+                    className="justify-between active:bg-neutral"
+                    href={"/admin"}
+                  >
+                    Admin Dashboard
+                  </Link>
+                </li>
+              )}
               <li>
                 <a onClick={handleSignOut}>Logout</a>
               </li>
