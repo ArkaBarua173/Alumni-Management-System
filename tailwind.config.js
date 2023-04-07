@@ -12,32 +12,45 @@ module.exports = {
   },
   daisyui: {
     themes: [
-      "lofi",
+      "night",
       // {
       //   mytheme: {
-      //     primary: "#7536b5",
+      //     primary: "#38BDF8",
 
-      //     secondary: "#ffa3c3",
+      //     secondary: "#818CF8",
 
-      //     accent: "#d1c330",
+      //     accent: "#F471B5",
 
-      //     neutral: "#322833",
+      //     neutral: "#1E293B",
 
-      //     // "base-100": "#EFF1F5",
-      //     "base-100": "#F2F2F2",
+      //     "base-100": "#0F172A",
 
-      //     info: "#45B9D3",
+      //     info: "#0CA5E9",
 
-      //     success: "#3ED0BA",
+      //     success: "#2DD4BF",
 
-      //     warning: "#F1D546",
+      //     warning: "#F4BF50",
 
-      //     error: "#E92B2B",
+      //     error: "#FB7085",
       //   },
       // },
     ],
   },
   plugins: [
+    function ({ addVariant }) {
+      addVariant(
+        "supports-backdrop-blur",
+        "@supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))"
+      );
+      addVariant(
+        "supports-scrollbars",
+        "@supports selector(::-webkit-scrollbar)"
+      );
+      addVariant("children", "& > *");
+      addVariant("scrollbar", "&::-webkit-scrollbar");
+      addVariant("scrollbar-track", "&::-webkit-scrollbar-track");
+      addVariant("scrollbar-thumb", "&::-webkit-scrollbar-thumb");
+    },
     require("@tailwindcss/forms"),
     require("@tailwindcss/line-clamp"),
     require("daisyui"),
