@@ -6,7 +6,7 @@ import axios from "axios";
 
 const getEvents = async () => {
   const response = await axios.get("http://localhost:3000/api/events");
-  return response.data;
+  return response.data.data;
 };
 
 export default function Events() {
@@ -20,7 +20,12 @@ export default function Events() {
 
   return (
     <Layout>
-      {data?.data?.map((datum) => (
+      {data?.length === 0 && (
+        <p className="flex justify-center my-8 font-bold">
+          There are no events
+        </p>
+      )}
+      {data?.map((datum) => (
         <SingleEvent key={datum.id} datum={datum} />
       ))}
     </Layout>
