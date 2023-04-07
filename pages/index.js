@@ -86,7 +86,7 @@ export default function Home() {
         <h1 className="m-4 p-8 text-4xl text-center font-bold">
           Upcoming Event
         </h1>
-        <div className="carousel w-full">
+        <div className="carousel mx-8 rounded-md">
           {events?.map((datum) => (
             <div
               id={`${datum?.id}`}
@@ -105,7 +105,8 @@ export default function Home() {
             </a>
           ))}
         </div>
-        <div className="flex justify-between mt-6 rounded bg-base-300">
+        {/* Forum */}
+        <div className="flex justify-between mt-6 bg-base-300 mx-8 rounded-md h-auto">
           <div className="ml-8 self-center">
             <h1 className="text-6xl font-bold pl-7 pb-4">Forum</h1>
             <div className="ml-8 text-3xl font-semibold">
@@ -118,7 +119,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height">
+          <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height scrollbar:!w-2 scrollbar:!h-2 scrollbar:bg-transparent scrollbar-track:!bg-base-300 scrollbar-thumb:!rounded scrollbar-thumb:!bg-neutral-300 scrollbar-track:!rounded">
             {topics?.map((topic) => (
               <div className="my-4 card bg-base-100 text-sm" key={topic.id}>
                 {isTopicLoading && <Loading />}
@@ -127,7 +128,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <footer className="bg-slate-900 text-white p-12 text-center">
+        <footer className="bg-base-100 text-white p-12 text-center">
           <p>Copyright © 2023 NSTU. All rights reserved</p>
         </footer>
       </Layout>
