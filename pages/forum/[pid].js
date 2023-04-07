@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function TopicId() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       comment: "",
@@ -58,7 +58,7 @@ export default function TopicId() {
   return (
     <Layout>
       <div className="my-8 sm:mx-auto sm:w-full sm:max-w-6xl">
-        <div className="card bg-base-200 shadow-xl">
+        <div className="card bg-base-300 shadow-xl">
           <div className="card-body">
             <h2 className="text-4xl font-bold">{data?.title}</h2>
             <p>{data?.details}</p>
@@ -68,7 +68,7 @@ export default function TopicId() {
           </div>
         </div>
 
-        <div className="mt-8 card bg-base-200 shadow-xl">
+        <div className="mt-8 card bg-base-300 shadow-xl">
           <div className="card-body">
             <h2 className="ml-2 font-semibold">Add a Comment</h2>
             <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
@@ -76,7 +76,7 @@ export default function TopicId() {
                 id="comment"
                 type="text"
                 required
-                className="w-full border-gray-300 rounded-lg shadow-sm"
+                className="w-full input input-bordered"
                 {...register("comment")}
               ></textarea>
               <button type="submit" className="btn mt-3" disabled={isDisabled}>
@@ -94,9 +94,6 @@ export default function TopicId() {
                 <div className="flex gap-4">
                   <div className="avatar">
                     <div className="w-12 rounded-full">
-                      {/* <img
-                      src={datum?.user?.image || Avatar(datum?.user?.name)}
-                    /> */}
                       <img
                         src={comment?.user?.image || "/assets/user_profile.svg"}
                       />

@@ -1,4 +1,5 @@
 import { parseISO, format } from "date-fns";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function SingleEvent({ datum }) {
@@ -10,16 +11,20 @@ export default function SingleEvent({ datum }) {
   const { push } = useRouter();
   console.log(formattedDate);
   return (
-    <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl" key={id}>
+    <div
+      className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl rounded-md"
+      key={id}
+    >
       <div className="card lg:card-side bg-base-100 shadow-xl">
-        <figure>
-          <img
+        <figure className="relative lg:w-96 sm:max-w-full sm:w-full">
+          <Image
+            fill
             src={`/images/${banner}`}
             alt="Album"
-            className="lg:w-96 sm:max-w-full sm:w-full"
+            className="object-left-top"
           />
         </figure>
-        <div className="card-body">
+        <div className="card-body bg-base-300">
           <h2 className="card-title">{title}</h2>
           <p>
             <strong>Date: </strong>
