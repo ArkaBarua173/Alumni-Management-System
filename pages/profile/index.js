@@ -8,9 +8,7 @@ import { useRouter } from "next/router";
 import { ImProfile } from "react-icons/im";
 
 const getProfile = async () => {
-  const response = await axios.get(
-    "http://localhost:3000/api/profile/getprofile"
-  );
+  const response = await axios.get("/api/profile/getprofile");
   return response.data.data;
 };
 
@@ -46,6 +44,14 @@ export default function Profile() {
                 </div>
                 <div className="grid h-15 w-1/2 border p-2">
                   {data?.username}
+                </div>
+              </div>
+              <div className="flex w-full">
+                <div className="grid h-15 w-1/2 font-semibold border p-2">
+                  Email
+                </div>
+                <div className="grid h-15 w-1/2 border p-2">
+                  {data?.user?.email}
                 </div>
               </div>
               <div className="flex w-full">
