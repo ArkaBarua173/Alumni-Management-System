@@ -21,7 +21,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="navbar bg-base-300 sticky top-0 z-50">
+    <div className="navbar bg-base-300">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -57,7 +57,7 @@ export default function Navbar() {
               <Link href="/gallery">Gallery</Link>
             </li>
             <li>
-              <Link href="/events">About</Link>
+              <Link href="/about">About</Link>
             </li>
             <li>
               <Link href="/events">Contact</Link>
@@ -105,7 +105,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/events" className="font-bold active:bg-neutral">
+            <Link href="/about" className="font-bold active:bg-neutral">
               About
             </Link>
           </li>
