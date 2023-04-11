@@ -26,10 +26,74 @@
     text-decoration: revert;
   }
 }
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+.ql-container {
+  @apply text-base rounded-b-lg;
+}
+
+.ql-container.ql-snow {
+  @apply border border-gray-400;
+}
+
+.ql-container .ql-editor.ql-blank::before {
+  @apply text-base-content;
+}
+.ql-container .ql-editor.ql-blank::before {
+  @apply text-base-content;
+}
+
+.ql-snow .ql-picker-label {
+  @apply font-poppins text-base-content;
+}
+
+.ql-picker.ql-expanded .ql-picker-options {
+  @apply rounded bg-base-300 text-base-content;
+}
+
+.ql-picker-item {
+  @apply font-poppins;
+}
+
+.ql-snow .ql-picker:hover .ql-picker-label:hover {
+  @apply font-poppins text-primary;
+}
+
+.ql-snow .ql-picker:hover .ql-picker-label:hover svg .ql-stroke {
+  @apply stroke-primary;
+}
+
+.ql-snow .ql-picker-label svg .ql-stroke,
+.ql-snow .ql-formats button svg .ql-stroke,
+.ql-snow .ql-formats button svg .ql-fill {
+  @apply stroke-base-content;
+}
+
+.ql-snow .ql-formats button.ql-active svg .ql-stroke,
+.ql-snow .ql-formats button:hover svg .ql-stroke,
+.ql-snow .ql-formats button:hover svg .ql-fill {
+  @apply stroke-primary;
+}
+
+.ql-editor {
+  @apply min-h-[150px] p-2;
+}
+
+.ql-editor p:first-of-type {
+  @apply mt-0;
+}
+
+.ql-editor p:last-of-type {
+  @apply mb-0;
+}
+
+.ql-toolbar {
+  @apply rounded-t-lg;
 }
 
 html,
@@ -39,7 +103,7 @@ body {
 }
 
 ::-webkit-calendar-picker-indicator {
-  filter: invert(1);
+  @apply filter-none;
 }
 
 input {

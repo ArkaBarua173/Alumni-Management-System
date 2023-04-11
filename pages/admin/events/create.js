@@ -7,9 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import AdminDashboard from "@/components/AdminDashboard";
-// import ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
-// import "react-quill/dist/quill.snow.css";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
@@ -79,6 +77,8 @@ export default function Create({ session }) {
     // Updating a state causes a re-render
     register("description", { required: true, minLength: 11 });
   }, [register]);
+
+  const modules = [];
 
   const onEditorStateChange = (editorState) => {
     setValue("description", editorState);
@@ -158,7 +158,8 @@ export default function Create({ session }) {
               <ReactQuill
                 id="description"
                 name="description"
-                theme="snow"
+                // theme="snow"
+                className=""
                 placeholder="Type description........."
                 value={editorContent}
                 onChange={onEditorStateChange}
