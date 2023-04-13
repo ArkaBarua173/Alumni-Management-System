@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Like from "@/components/LIke/LikeComponent";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
@@ -56,13 +57,15 @@ export default function TopicId() {
   if (isLoading) return "Loading";
 
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="my-8 sm:mx-auto sm:w-full sm:max-w-6xl">
         <div className="card bg-base-300 shadow-xl">
           <div className="card-body">
             <h2 className="text-4xl font-bold">{data?.title}</h2>
             <p>{data?.details}</p>
             <div className="mt-2 flex gap-3">
+              <Like topicId={data?.id} />
               <p className="font-bold">{data?.comments?.length} comments</p>
             </div>
           </div>
@@ -121,6 +124,6 @@ export default function TopicId() {
         </div>
         {/* Comment */}
       </div>
-    </Layout>
+    </>
   );
 }

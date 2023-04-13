@@ -4,6 +4,7 @@ import { format, parseISO } from "date-fns";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useMemo } from "react";
+import Like from "./LIke/LikeComponent";
 
 export default function SingleForum({ topic }) {
   const { data: session } = useSession();
@@ -44,6 +45,7 @@ export default function SingleForum({ topic }) {
         >
           Open Discussion
         </Link>
+        <Like topicId={topic?.id} />
         <p className="font-bold">{topic?.comments?.length} comments</p>
       </div>
     </div>

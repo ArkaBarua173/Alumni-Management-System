@@ -55,6 +55,7 @@ model User {
   comment       Comment[]
   degree        Degree[]
   gallery       Gallery[]
+  likes         Like[]
 }
 
 model Profile {
@@ -129,9 +130,18 @@ model Topic {
   details   String
   userId    String
   user      User      @relation(fields: [userId], references: [id])
+  likes     Like[]
   comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+model Like {
+  id            String  @id @default(cuid())
+  likedByUserId String
+  likedByUser   User    @relation(fields: [likedByUserId], references: [id], onDelete: Cascade)
+  topic         Topic?  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topicId       String?
 }
 
 model Comment {
