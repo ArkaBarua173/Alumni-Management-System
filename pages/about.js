@@ -2,7 +2,8 @@ import Layout from "@/components/Layout";
 
 export default function About() {
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="h-[calc(100vh-8rem)]">
         <p className="text-2xl text-center mt-8 font-bold capitalize pb-4 ">
           Who we are
@@ -71,6 +72,6 @@ export default function About() {
           </p>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

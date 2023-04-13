@@ -19,7 +19,8 @@ export default function Events() {
   console.log(data);
 
   return (
-    <Layout>
+    <>
+      <Layout />
       {data?.length === 0 && (
         <p className="flex justify-center my-8 font-bold">
           There are no events
@@ -28,6 +29,6 @@ export default function Events() {
       {data?.map((datum) => (
         <SingleEvent key={datum.id} datum={datum} />
       ))}
-    </Layout>
+    </>
   );
 }

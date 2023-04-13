@@ -47,91 +47,88 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <div
-          className="hero min-h-screen"
-          style={{
-            backgroundImage: `url("/assets/Nstu_logo1.jpg")`,
-          }}
-        >
-          <div className="hero-overlay bg-opacity-60"></div>
-          <div className="hero-content text-center text-white">
-            <div className="max-w-lg flex flex-col">
-              <h1 className="mb-5 text-5xl font-bold ">
-                Welcome To NSTU Alumni Management System
-              </h1>
-              <p className="mb-5 max-w-md">
-                Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                assumenda excepturi exercitationem quasi. In deleniti eaque aut
-                repudiandae et a id nisi.
-              </p>
-              <div className="flex gap-4 items-center self-center ">
-                <Link
-                  href="/auth/register"
-                  className="btn btn-outline no-animation text-white"
-                >
-                  Create Account
-                </Link>
-                <Link
-                  href="/auth/signin"
-                  className="btn btn-outline no-animation text-white"
-                >
-                  Login
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Events */}
-        <h1 className="m-4 p-8 text-4xl text-center font-bold">
-          Upcoming Event
-        </h1>
-        <div className="carousel mx-8 rounded-md">
-          {events?.map((datum) => (
-            <div
-              id={`${datum?.id}`}
-              className="carousel-item w-full"
-              key={datum?.id}
-            >
-              {isEventLoading && <Loading />}
-              <CarouselEvent datum={datum} />
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center w-full p-4 mt-2 gap-2">
-          {events?.map((datum, key) => (
-            <a href={`#${datum?.id}`} className="btn btn-xs" key={datum?.id}>
-              {key + 1}
-            </a>
-          ))}
-        </div>
-        {/* Forum */}
-        <div className="flex justify-between mt-6 bg-base-300 mx-8 rounded-md h-auto">
-          <div className="ml-8 self-center">
-            <h1 className="text-6xl font-bold pl-7 pb-4">Forum</h1>
-            <div className="ml-8 text-3xl font-semibold">
-              <Link href={"/auth/signin"} className="text-blue-500">
+      <Layout />
+      <div
+        className="hero min-h-screen"
+        style={{
+          backgroundImage: `url("/assets/Nstu_logo1.jpg")`,
+        }}
+      >
+        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-content text-center text-white">
+          <div className="max-w-lg flex flex-col">
+            <h1 className="mb-5 text-5xl font-bold ">
+              Welcome To NSTU Alumni Management System
+            </h1>
+            <p className="mb-5 max-w-md">
+              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
+              et a id nisi.
+            </p>
+            <div className="flex gap-4 items-center self-center ">
+              <Link
+                href="/auth/register"
+                className="btn btn-outline no-animation text-white"
+              >
+                Create Account
+              </Link>
+              <Link
+                href="/auth/signin"
+                className="btn btn-outline no-animation text-white"
+              >
                 Login
-              </Link>{" "}
-              <p>to create new topics and comments</p>
-              <Link href="/forum" className="btn btn-outline no-animation mt-4">
-                Start a new discussion
               </Link>
             </div>
           </div>
-          <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height scrollbar:!w-2 scrollbar:!h-2 scrollbar:bg-transparent scrollbar-track:!bg-base-300 scrollbar-thumb:!rounded scrollbar-thumb:!bg-neutral-300 scrollbar-track:!rounded">
-            {topics?.map((topic) => (
-              <div className="my-4 card bg-base-100 text-sm" key={topic.id}>
-                {isTopicLoading && <Loading />}
-                <SingleForum topic={topic} />
-              </div>
-            ))}
+        </div>
+      </div>
+      {/* Events */}
+      <h1 className="m-4 p-8 text-4xl text-center font-bold">Upcoming Event</h1>
+      <div className="carousel mx-8 rounded-md">
+        {events?.map((datum) => (
+          <div
+            id={`${datum?.id}`}
+            className="carousel-item w-full"
+            key={datum?.id}
+          >
+            {isEventLoading && <Loading />}
+            <CarouselEvent datum={datum} />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center w-full p-4 mt-2 gap-2">
+        {events?.map((datum, key) => (
+          <a href={`#${datum?.id}`} className="btn btn-xs" key={datum?.id}>
+            {key + 1}
+          </a>
+        ))}
+      </div>
+      {/* Forum */}
+      <div className="flex justify-between mt-6 bg-base-300 mx-8 rounded-md h-auto">
+        <div className="ml-8 self-center">
+          <h1 className="text-6xl font-bold pl-7 pb-4">Forum</h1>
+          <div className="ml-8 text-3xl font-semibold">
+            <Link href={"/auth/signin"} className="text-blue-500">
+              Login
+            </Link>{" "}
+            <p>to create new topics and comments</p>
+            <Link href="/forum" className="btn btn-outline no-animation mt-4">
+              Start a new discussion
+            </Link>
           </div>
         </div>
-        <footer className="bg-base-100 text-white p-12 text-center">
-          <p>Copyright © 2023 NSTU. All rights reserved</p>
-        </footer>
-      </Layout>
+        <div className="basis-1/2 overflow-scroll overflow-x-auto pr-4 forum-height scrollbar:!w-2 scrollbar:!h-2 scrollbar:bg-transparent scrollbar-track:!bg-base-300 scrollbar-thumb:!rounded scrollbar-thumb:!bg-neutral-300 scrollbar-track:!rounded">
+          {topics?.map((topic) => (
+            <div className="my-4 card bg-base-100 text-sm" key={topic.id}>
+              {isTopicLoading && <Loading />}
+              <SingleForum topic={topic} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <footer className="bg-base-100 text-white p-12 text-center">
+        <p>Copyright © 2023 NSTU. All rights reserved</p>
+      </footer>
     </>
   );
 }

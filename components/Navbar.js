@@ -131,13 +131,23 @@ export default function Navbar() {
             </label>
             <ul
               tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-primary rounded-box w-52"
+              className="mt-5 p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52"
             >
               <li>
-                <a href="/auth/signin">Login</a>
+                <Link
+                  className="justify-between active:bg-neutral"
+                  href="/auth/signin"
+                >
+                  Login
+                </Link>
               </li>
               <li>
-                <a href="/auth/register">Register</a>
+                <Link
+                  className="justify-between active:bg-neutral"
+                  href="/auth/register"
+                >
+                  Register
+                </Link>
               </li>
             </ul>
           </div>

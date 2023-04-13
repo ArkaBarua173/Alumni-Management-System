@@ -21,7 +21,8 @@ export default function Forum() {
   console.log(data);
 
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="my-10 sm:mx-auto sm:w-full sm:max-w-4xl">
         <div className="flex justify-between mb-4">
           <h1 className="text-lg font-bold">Forum</h1>
@@ -35,6 +36,6 @@ export default function Forum() {
           </div>
         ))}
       </div>
-    </Layout>
+    </>
   );
 }

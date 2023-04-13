@@ -23,7 +23,8 @@ export default function Events() {
   if (isLoading) return <Loading />;
 
   return (
-    <Layout>
+    <>
+      <Layout />
       {isLoading && <Loading />}
       <div className="my-10 sm:mx-auto sm:w-full sm:max-w-6xl">
         <div className="card bg-base-100 shadow-xl rounded-md">
@@ -52,6 +53,6 @@ export default function Events() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

@@ -48,7 +48,8 @@ export default function Create() {
   };
 
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="my-10 md:w-11/12 md:max-w-5xl sm:mx-auto sm:w-full sm:max-w-md ">
         <h1 className="mb-8 text-center text-lg font-bold">Add a new degree</h1>
         <div className="py-4 px-6 shadow rounded-lg sm:px-10 bg-slate-200">
@@ -111,7 +112,7 @@ export default function Create() {
           </form>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

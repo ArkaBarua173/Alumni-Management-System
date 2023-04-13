@@ -50,7 +50,8 @@ export default function Create() {
   };
 
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="my-10 md:w-11/12 md:max-w-5xl sm:mx-auto sm:w-full sm:max-w-md">
         <h1 className="mb-8 text-center text-lg font-bold">
           Create New Discussion
@@ -114,6 +115,6 @@ export default function Create() {
           </form>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

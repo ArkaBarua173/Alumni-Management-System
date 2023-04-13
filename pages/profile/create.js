@@ -113,7 +113,8 @@ export default function Create() {
   console.log(watchJobStatus);
 
   return (
-    <Layout>
+    <>
+      <Layout />
       <div className="my-10 max-w-2xl sm:mx-auto sm:w-full">
         <h1 className="my-3 text-center text-lg font-bold">
           Create your profile
@@ -357,7 +358,7 @@ export default function Create() {
           </form>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 
