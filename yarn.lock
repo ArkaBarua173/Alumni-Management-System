@@ -180,6 +180,11 @@
   resolved "https://registry.yarnpkg.com/@dicebear/thumbs/-/thumbs-5.3.4.tgz#541c52ad5ea3e73134611b7c109c659fa9a5f267"
   integrity sha512-++Wf48g1/WLf+GWeobaCd8IPyUFDFGkFF+chFp33YYu+Vxfj3slBb/yV7k1Wo7om+I0Wb+zoocL/YV6D05odyg==
 
+"@emailjs/browser@^3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@emailjs/browser/-/browser-3.11.0.tgz#0e78de2f85096d1a9ad5b5977b060bb5d1784cb4"
+  integrity sha512-RkY3FKZ3fPdK++OeF46mRTFpmmQWCHUVHZH209P3NE4D5sg2Atg7S2wa3gw5062Gl4clt4Wn5SyC4WhlVZC5pA==
+
 "@hookform/resolvers@^2.9.11":
   version "2.9.11"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.11.tgz#9ce96e7746625a89239f68ca57c4f654264c17ef"

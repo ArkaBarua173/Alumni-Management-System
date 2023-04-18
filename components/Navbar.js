@@ -60,7 +60,7 @@ export default function Navbar() {
               <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/events">Contact</Link>
+              <Link href="/contact">Contact</Link>
             </li>
           </ul>
         </div>
@@ -110,7 +110,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/events" className="font-bold active:bg-neutral">
+            <Link href="/contact" className="font-bold active:bg-neutral">
               Contact
             </Link>
           </li>

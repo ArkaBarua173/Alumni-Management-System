@@ -12,7 +12,6 @@ export default function SingleForum({ topic }) {
     return createAvatar(initials, {
       size: 128,
       seed: session?.name,
-      // ... other options
     }).toDataUriSync();
   }, []);
   return (
