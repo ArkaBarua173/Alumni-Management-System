@@ -4,6 +4,7 @@ import { AiFillProfile, AiOutlineHome } from "react-icons/ai";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiDiscussFill } from "react-icons/ri";
 import { ImExit } from "react-icons/im";
+import { signOut } from "next-auth/react";
 
 export default function Layout({ children }) {
   const { pathname } = useRouter();
@@ -78,12 +79,12 @@ export default function Layout({ children }) {
               </Link>
             </li>
             <li>
-              <Link style={{ borderRadius: "0px" }} href="/">
+              <div style={{ borderRadius: "0px" }} onClick={() => signOut()}>
                 <span>
                   <ImExit size={20} color="white" />
                 </span>
-                Sign Out
-              </Link>
+                Log Out
+              </div>
             </li>
           </ul>
         </div>

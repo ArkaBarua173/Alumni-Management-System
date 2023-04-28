@@ -6,6 +6,7 @@ import { RiDiscussFill } from "react-icons/ri";
 import { TfiGallery } from "react-icons/tfi";
 import { ImExit } from "react-icons/im";
 import { FaUsers } from "react-icons/fa";
+import { signOut } from "next-auth/react";
 
 export default function DashboardLayout({ children }) {
   const { pathname } = useRouter();
@@ -107,12 +108,12 @@ export default function DashboardLayout({ children }) {
               </Link>
             </li>
             <li>
-              <Link style={{ borderRadius: "0px" }} href="/">
+              <div style={{ borderRadius: "0px" }} onClick={() => signOut()}>
                 <span>
                   <ImExit size={20} color="white" />
                 </span>
-                Sign Out
-              </Link>
+                Log Out
+              </div>
             </li>
           </ul>
         </div>
