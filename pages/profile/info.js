@@ -3,8 +3,27 @@ import BioForm from "@/components/Profile/BioForm";
 import DegreeForm from "@/components/Profile/DegreeForm";
 import JobForm from "@/components/Profile/JobForm";
 import UserProfileLayout from "@/components/UserProfileLayout";
+import axios from "axios";
+import Loading from "@/components/Loading";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+
+const getProfile = async () => {
+  const response = await axios.get("/api/profile/getProfile");
+  return response.data.data;
+};
 
 export default function Info() {
+  const { replace } = useRouter();
+  const { data, error, isLoading } = useQuery({
+    queryFn: getProfile,
+    queryKey: ["profile"],
+  });
+  if (error) return error;
+  if (isLoading) return <Loading />;
+
+  if (data === null) replace("/profile");
+
   return (
     <>
       <UserProfileLayout>
