@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { ImProfile } from "react-icons/im";
 
 const getProfile = async () => {
-  const response = await axios.get("/api/profile/getprofile");
+  const response = await axios.get("/api/profile/getProfile");
   return response.data.data;
 };
 
@@ -66,16 +66,14 @@ export default function Profile() {
                   Department
                 </div>
                 <div className="grid h-15 w-1/2 border p-2">
-                  {data?.degree?.department}
+                  {data?.department}
                 </div>
               </div>
               <div className="flex w-full">
                 <div className="grid h-15 w-1/2 font-semibold  border p-2">
                   Degree
                 </div>
-                <div className="grid h-15 w-1/2 border p-2">
-                  {data?.degree?.name}
-                </div>
+                <div className="grid h-15 w-1/2 border p-2">{data?.degree}</div>
               </div>
               <div className="flex w-full">
                 <div className="grid h-15 w-1/2 font-semibold  border p-2">
@@ -136,7 +134,7 @@ export default function Profile() {
           </div>
         ) : (
           <div className="p-4 flex flex-col justify-center items-center">
-            <p className="text-xl">Don't have profile?</p>
+            <p className="text-xl mb-4">Don't have profile?</p>
             <button
               className="btn btn-primary"
               onClick={() => {

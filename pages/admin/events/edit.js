@@ -7,7 +7,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-// import "react-quill/dist/quill.snow.css";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
@@ -161,19 +160,10 @@ export default function EditEvent({ id, title, banner, date, description }) {
               <span className="label-text font-bold">Description</span>
             </label>
             <div className="mt-1">
-              {/* <textarea
-                id="description"
-                cols="30"
-                rows="10"
-                className="w-full input input-bordered"
-                defaultValue={defaultValues.description}
-                {...register("description")}
-              ></textarea> */}
               <ReactQuill
                 id="description"
                 name="description"
                 theme="snow"
-                // placeholder="Type description........."
                 defaultValue={defaultValues.description}
                 value={editorContent}
                 onChange={onEditorStateChange}

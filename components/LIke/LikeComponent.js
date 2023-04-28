@@ -35,7 +35,6 @@ export default function Like({ topicId }) {
     const found = data[0]?.likes.some(
       (like) => like.likedByUserId === session?.id
     );
-    console.log(found);
   }
   if (error) return error;
   if (isLoading) return <Loading />;

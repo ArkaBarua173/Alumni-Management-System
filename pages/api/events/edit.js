@@ -73,6 +73,7 @@ const handler = async (req, res) => {
             banner: files.banner.newFilename,
           },
         });
+
         res.status(201).json({ updatedEvent });
       } catch (err) {
         res

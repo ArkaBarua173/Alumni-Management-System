@@ -23,7 +23,6 @@ export default async function handler(req, res) {
     const commentCount = await prisma.comment.count({
       where: { topic: { userId: session?.id } },
     });
-    console.log(commentCount);
     res.status(200).json({ topic: data, commentCount });
   } catch (err) {
     res.status(403).json({ err: "Error has occured while getting the topics" });

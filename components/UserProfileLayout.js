@@ -23,7 +23,7 @@ export default function Layout({ children }) {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-primary text-white gap-4">
+          <ul className="menu p-4 w-80 bg-neutral text-neutral-content gap-4">
             <h1 className="text-4xl font-bold ml-4 my-4">Profile</h1>
 
             <li className="flex">

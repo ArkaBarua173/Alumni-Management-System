@@ -137,7 +137,7 @@ export default function Contact() {
             </div>
             <div className="my-10">
               <h1 className="mb-8 text-center text-lg font-bold">Follow Us</h1>
-              <div className="py-4 px-6 shadow rounded-lg sm:px-10 bg-base-300 text-center">
+              <div className="py-7 px-6 shadow rounded-lg sm:px-10 bg-base-300 text-center">
                 <Link
                   href={"https://www.facebook.com/"}
                   target="_blank"
@@ -171,6 +171,13 @@ export default function Contact() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="py-12 my-8 shadow rounded-lg sm:px-10 bg-base-300 text-center flex w-3/4 mx-auto justify-between items-center">
+          <p className="font-bold">
+            This is project done by the students of NSTU. You can contribute to
+            this project via donation.{" "}
+          </p>
+          <button className="btn no-animation">Donate</button>
         </div>
       </div>
     </>

@@ -32,7 +32,7 @@ export default function UserForum() {
         </div>
         {data?.topic?.map((datum) => (
           <div className="m-8 card bg-base-200" key={datum.id}>
-            <SingleForum topic={datum} />
+            <SingleForum topic={datum} profile={true} />
           </div>
         ))}
       </UserProfileLayout>

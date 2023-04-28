@@ -114,7 +114,6 @@ export default function EventTableRow({ row, isSelected, onSelect }) {
               Close
             </button>
           </div>
-          {/* <p>{row.banner}</p> */}
         </Modal>
       )}
       {showDeleteModal && (

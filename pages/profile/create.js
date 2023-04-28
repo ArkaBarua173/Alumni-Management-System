@@ -17,23 +17,18 @@ const schema = yup.object().shape({
     .required()
     .test(
       "len",
-      "can be empty or with string at least 10 characters and not more than 250",
+      "can be empty or with string at least 10 characters and not more than 300",
       (val) => {
         if (val === undefined) {
           return true;
         }
-        return val.length == 0 || (val.length >= 10 && val.length <= 250);
+        return val.length == 0 || (val.length >= 10 && val.length <= 300);
       }
     ),
   department: yup.string().required(),
   degree: yup.string().required(),
   resultPublishedDate: yup.date().required(),
 });
-
-const getDepartments = async () => {
-  const response = await axios.get("/api/profile/degrees/getdepartments");
-  return response.data.data;
-};
 
 export default function Create() {
   const [err, setErr] = useState("");
@@ -91,19 +86,22 @@ export default function Create() {
     }
   }, [register, unregister, watchJobStatus]);
 
-  const { data, error, isLoading } = useQuery({
-    queryFn: getDepartments,
-    queryKey: ["departments"],
-  });
-  if (error) return error;
-  if (isLoading) return <Loading />;
-
   const handleDepartment = async (e) => {
-    const resDeg = await fetch(`/api/profile/degrees/${e.target.value}`);
-    const getDeg = await resDeg.json();
-    setDegrees(await getDeg);
+    const department = e.target.value;
+    if (department === "Software Engineering Program")
+      setDegrees([
+        "B.Sc.in Software Engineering",
+        "Post Graduate Diploma in Information Technology (PGDIT)",
+      ]);
+    if (
+      department ===
+      "Department of Computer Science and Telecommunication Engineering"
+    )
+      setDegrees([
+        "B.Sc. Eng. in Computer Science and Telecommunication Engineering",
+        "M.Sc. Eng. in Computer Science and Telecommunication Engineering",
+      ]);
     setIsDisabled(false);
-    console.log(degrees);
   };
 
   const onSubmit = async (data) => {
@@ -119,56 +117,50 @@ export default function Create() {
         <h1 className="my-3 text-center text-lg font-bold">
           Create your profile
         </h1>
-        <div className="py-8 px-6 shadow rounded-lg sm:px-10 bg-slate-200">
-          <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Username
+        <div className="py-8 px-6 shadow rounded-lg sm:px-10 bg-base-300">
+          <form
+            className="mb-0 space-y-6 form-control"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="username" className="block label">
+              <span className="label-text font-bold">Username</span>
             </label>
             <div className="mt-1">
               <input
                 id="username"
                 type="text"
                 placeholder="Enter your user name"
-                className="w-full border-gray-300 rounded-lg shadow-sm"
+                className="w-full input input-bordered"
                 {...register("username")}
               />
               <p className="text-red-700 ml-1 mt-1">
                 {errors.username?.message}
               </p>
             </div>
-            <label
-              htmlFor="bio"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Add Bio
+            <label htmlFor="bio" className="block label">
+              <span className="label-text font-bold">Add Bio</span>
             </label>
             <div className="mt-1">
               <textarea
                 id="bio"
                 cols="30"
                 rows="10"
-                className="w-full border-gray-300 rounded-lg shadow-sm h-32"
+                className="w-full input input-bordered h-60"
                 {...register("bio")}
               ></textarea>
               <p
                 className={`font-bold text-sm ml-1 mt-2 ${
-                  watch("bio").length <= 10 || watch("bio").length > 250
+                  watch("bio").length <= 10 || watch("bio").length > 300
                     ? "text-red-700"
-                    : "text-gray-700"
+                    : "text-base-content"
                 }`}
-              >{`${watch("bio").length}/250`}</p>
+              >{`${watch("bio").length}/300`}</p>
               <p className="text-red-700 ml-1 mt-1">{errors.bio?.message}</p>
             </div>
             {err && <p className="text-red-700 ml-1 mt-1"></p>}
             <h1 className="">Provide your latest degree information</h1>
-            <label
-              htmlFor="department"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Department
+            <label htmlFor="department" className="block label">
+              <span className="label-text font-bold">Department</span>
             </label>
             <div className="mt-1">
               <select
@@ -178,26 +170,29 @@ export default function Create() {
                 defaultValue={""}
                 {...register("department")}
                 onChange={(e) => handleDepartment(e)}
-                className="w-full border-gray-300 rounded-lg shadow-sm invalid:text-gray-500"
+                className="w-full input input-bordered"
               >
                 <option value={""} disabled>
                   Choose department
                 </option>
-                {data?.map((datum) => (
-                  <option value={datum?.department} key={datum?.department}>
-                    {datum?.department}
-                  </option>
-                ))}
+                <option value={"Software Engineering Program"}>
+                  Software Engineering Program
+                </option>
+                <option
+                  value={
+                    "Department of Computer Science and Telecommunication Engineering"
+                  }
+                >
+                  Department of Computer Science and Telecommunication
+                  Engineering
+                </option>
               </select>
               <p className="text-red-700 ml-1 mt-1">
                 {errors.department?.message}
               </p>
             </div>
-            <label
-              htmlFor="degree"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Degree
+            <label htmlFor="degree" className="block label">
+              <span className="label-text font-bold">Degree</span>
             </label>
             <div className="mt-1">
               <select
@@ -205,25 +200,24 @@ export default function Create() {
                 type="text"
                 defaultValue={""}
                 disabled={isDisabled}
-                className="w-full border-gray-300 rounded-lg shadow-sm invalid:text-gray-500"
+                className="w-full input input-bordered"
                 {...register("degree")}
               >
                 <option value={""} disabled>
                   Choose degree
                 </option>
-                {degrees?.data?.map((degree) => (
-                  <option value={degree.name} key={degree.name}>
-                    {degree.name}
+                {degrees?.map((degree) => (
+                  <option value={degree} key={degree}>
+                    {degree}
                   </option>
                 ))}
               </select>
               <p className="text-red-700 ml-1 mt-1">{errors.degree?.message}</p>
             </div>
-            <label
-              htmlFor="resultPublishedDate"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Result Published Date
+            <label htmlFor="resultPublishedDate" className="block label">
+              <span className="label-text font-bold">
+                Result Published Date
+              </span>
             </label>
             <div className="mt-1">
               <input
@@ -234,7 +228,7 @@ export default function Create() {
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="2011-06-01"
-                className="w-full border-gray-300 rounded-lg shadow-sm"
+                className="w-full input input-bordered"
                 {...register("resultPublishedDate")}
               />
               <p className="text-red-700 ml-1 mt-1">
@@ -242,22 +236,21 @@ export default function Create() {
               </p>
             </div>
             <div className="mt-1">
-              <p className="block text-sm font-medium text-gray-700 mb-3">
-                Select your current job status:
-              </p>
+              <label className="block label">
+                <span className="label-text font-bold">
+                  Select your current job status:
+                </span>
+              </label>
               <div className="mb-3 flex gap-3 items-center">
                 <input
                   id="jobStatus"
                   type="radio"
                   value={"UNEMPLOYED"}
-                  className="border-gray-300 rounded-lg shadow-sm"
+                  className="radio"
                   {...register("jobStatus")}
                 />
-                <label
-                  htmlFor="jobStatus"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Unemployed
+                <label htmlFor="jobStatus" className="block label">
+                  <span className="label-text font-bold">Unemployed</span>
                 </label>
               </div>
               <p className="text-red-700 ml-1 mt-1">
@@ -268,14 +261,11 @@ export default function Create() {
                   id="jobStatus"
                   type="radio"
                   value={"EMPLOYED"}
-                  className="border-gray-300 rounded-lg shadow-sm"
+                  className="radio"
                   {...register("jobStatus")}
                 />
-                <label
-                  htmlFor="jobStatus"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Employed
+                <label htmlFor="jobStatus" className="block label">
+                  <span className="label-text font-bold">Employed</span>
                 </label>
               </div>
               <p className="text-red-700 ml-1 mt-1">
@@ -284,11 +274,8 @@ export default function Create() {
             </div>
             {watchJobStatus === "EMPLOYED" ? (
               <>
-                <label
-                  htmlFor="designation"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Job Title
+                <label htmlFor="designation" className="block label">
+                  <span className="label-text font-bold">Job Title</span>
                 </label>
                 <div className="mt-1">
                   <input
@@ -296,18 +283,15 @@ export default function Create() {
                     type="text"
                     required
                     placeholder="Job Title"
-                    className="w-full border-gray-300 rounded-lg shadow-sm"
+                    className="w-full input input-bordered"
                     {...register("designation")}
                   />
                   <p className="text-red-700 ml-1 mt-1">
                     {errors.designation?.message}
                   </p>
                 </div>
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Job Company
+                <label htmlFor="company" className="block label">
+                  <span className="label-text font-bold">Job Company</span>
                 </label>
                 <div className="mt-1">
                   <input
@@ -315,18 +299,15 @@ export default function Create() {
                     type="text"
                     required
                     placeholder="Job Company"
-                    className="w-full border-gray-300 rounded-lg shadow-sm"
+                    className="w-full input input-bordered"
                     {...register("company")}
                   />
                   <p className="text-red-700 ml-1 mt-1">
                     {errors.company?.message}
                   </p>
                 </div>
-                <label
-                  htmlFor="joiningDate"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Joining Date
+                <label htmlFor="joiningDate" className="block label">
+                  <span className="label-text font-bold">Joining Date</span>
                 </label>
                 <div className="mt-1">
                   <input
@@ -338,7 +319,7 @@ export default function Create() {
                     onFocus={(e) => (e.target.type = "month")}
                     onBlur={(e) => (e.target.type = "text")}
                     placeholder="April 2011"
-                    className="w-full border-gray-300 rounded-lg shadow-sm"
+                    className="w-full input input-bordered"
                     {...register("joiningDate")}
                   />
                   <p className="text-red-700 ml-1 mt-1">
@@ -350,7 +331,7 @@ export default function Create() {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center py-2 px-4 btn no-animation text-white"
               >
                 Create
               </button>
