@@ -1,16 +1,32 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { getSession, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().email().required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 export default function Signin() {
   const [show, setShow] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const [err, setErr] = useState("");
+  const [signDisable, setSignDisable] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const router = useRouter();
 
   const onSubmit = async (data) => {
+    setSignDisable(true);
     const status = await signIn("credentials", {
       redirect: false,
       email: data.email,
@@ -18,7 +34,15 @@ export default function Signin() {
       callbackUrl: "http://localhost:3000",
     });
 
-    if (status.ok) router.push(status.url);
+    if (status.error) {
+      setErr(status.error);
+      setSignDisable(false);
+    }
+
+    if (status.ok) {
+      router.push(status.url);
+      setSignDisable(false);
+    }
   };
 
   async function handleGoogleSignin() {
@@ -28,35 +52,33 @@ export default function Signin() {
   return (
     <div className="my-10 sm:mx-auto sm:w-full sm:max-w-md">
       <h1 className="my-3 text-center text-lg font-bold">Sign In</h1>
-      <div className="py-8 px-6 shadow rounded-lg sm:px-10 bg-slate-300">
-        <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
+      <div className="py-8 px-6 shadow rounded-lg sm:px-10 bg-base-300">
+        <form
+          className="mb-0 space-y-6 form-control"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <label htmlFor="email" className="block label">
+            <span className="label-text font-bold">Email</span>
           </label>
           <div className="mt-1">
             <input
               id="email"
               type="email"
               placeholder="Enter your email"
-              className="w-full border-gray-300 rounded-lg shadow-sm"
+              className="w-full input input-bordered"
               {...register("email")}
             />
           </div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
+          <p className="text-error ml-1 mt-1">{errors.email?.message}</p>
+          <label htmlFor="password" className="block label">
+            <span className="label-text font-bold">Password</span>
           </label>
           <div className="relative mt-1">
             <input
               id="password"
               type={`${show ? "text" : "password"}`}
               placeholder="Enter your password"
-              className="w-full border-gray-300 rounded-lg shadow-sm"
+              className="w-full input input-bordered"
               {...register("password")}
             />
             <span
@@ -66,30 +88,33 @@ export default function Signin() {
               {show ? <FaEye size={25} /> : <FaEyeSlash size={25} />}
             </span>
           </div>
+          <p className="text-error ml-1 mt-1">{errors.password?.message}</p>
+          {err && <p className="text-error">{err}</p>}
           <div>
             <button
+              disabled={signDisable}
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full flex justify-center py-2 px-4 btn no-animation text-white"
             >
               Sign In
             </button>
           </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full flex gap-2 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-slate-100 hover:bg-slate-200 focus:ring-offset-2 focus:ring-slate-50"
-              onClick={handleGoogleSignin}
-            >
-              Sign in with Google{" "}
-              <Image
-                src={"/assets/google.svg"}
-                width="20"
-                height={20}
-                alt={"Google icon"}
-              ></Image>
-            </button>
-          </div>
         </form>
+        <div className="mt-6">
+          <button
+            type="submit"
+            className="w-full flex justify-center py-2 px-4 btn no-animation text-white gap-3"
+            onClick={handleGoogleSignin}
+          >
+            Sign in with Google{" "}
+            <Image
+              src={"/assets/google.svg"}
+              width="20"
+              height={20}
+              alt={"Google icon"}
+            ></Image>
+          </button>
+        </div>
       </div>
     </div>
   );
