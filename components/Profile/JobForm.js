@@ -86,24 +86,26 @@ export default function UserNameForm() {
   };
 
   return (
-    <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="mb-0 space-y-6 form-control"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="mt-1">
-        <p className="block text-sm font-medium text-gray-700 mb-3">
-          Select your current job status:
-        </p>
+        <label className="block label">
+          <span className="label-text font-bold">
+            Select your current job status:
+          </span>
+        </label>
         <div className="mb-3 flex gap-3 items-center">
           <input
             id="jobStatus"
             type="radio"
             value={"UNEMPLOYED"}
-            className="border-gray-300 rounded-lg shadow-sm"
+            className="radio"
             {...register("jobStatus")}
           />
-          <label
-            htmlFor="jobStatus"
-            className="text-sm font-medium text-gray-700"
-          >
-            Unemployed
+          <label htmlFor="jobStatus" className="block label">
+            <span className="label-text font-bold">Unemployed</span>
           </label>
         </div>
         <p className="text-red-700 ml-1 mt-1">{errors.jobStatus?.message}</p>
@@ -112,26 +114,19 @@ export default function UserNameForm() {
             id="jobStatus"
             type="radio"
             value={"EMPLOYED"}
-            defaultChecked={data?.jobStatus === "EMPLOYED"}
-            className="border-gray-300 rounded-lg shadow-sm"
+            className="radio"
             {...register("jobStatus")}
           />
-          <label
-            htmlFor="jobStatus"
-            className="text-sm font-medium text-gray-700"
-          >
-            Employed
+          <label htmlFor="jobStatus" className="block label">
+            <span className="label-text font-bold">Employed</span>
           </label>
         </div>
         <p className="text-red-700 ml-1 mt-1">{errors.jobStatus?.message}</p>
       </div>
       {watchJobStatus === "EMPLOYED" && (
         <>
-          <label
-            htmlFor="designation"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Job Title
+          <label htmlFor="designation" className="block label">
+            <span className="label-text font-bold">Job Title</span>
           </label>
           <div className="mt-1">
             <input
@@ -139,18 +134,15 @@ export default function UserNameForm() {
               type="text"
               required
               placeholder="Job Title"
-              className="w-full border-gray-300 rounded-lg shadow-sm"
+              className="w-full input input-bordered"
               {...register("designation")}
             />
             <p className="text-red-700 ml-1 mt-1">
               {errors.designation?.message}
             </p>
           </div>
-          <label
-            htmlFor="company"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Job Company
+          <label htmlFor="company" className="block label">
+            <span className="label-text font-bold">Job Company</span>
           </label>
           <div className="mt-1">
             <input
@@ -158,16 +150,13 @@ export default function UserNameForm() {
               type="text"
               required
               placeholder="Job Company"
-              className="w-full border-gray-300 rounded-lg shadow-sm"
+              className="w-full input input-bordered"
               {...register("company")}
             />
             <p className="text-red-700 ml-1 mt-1">{errors.company?.message}</p>
           </div>
-          <label
-            htmlFor="joiningDate"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Joining Date
+          <label htmlFor="joiningDate" className="block label">
+            <span className="label-text font-bold">Joining Date</span>
           </label>
           <div className="mt-1">
             <input
@@ -186,7 +175,7 @@ export default function UserNameForm() {
                     )
                   : "April 2011"
               }
-              className="w-full border-gray-300 rounded-lg shadow-sm"
+              className="w-full input input-bordered"
               {...register("joiningDate")}
             />
             <p className="text-red-700 ml-1 mt-1">

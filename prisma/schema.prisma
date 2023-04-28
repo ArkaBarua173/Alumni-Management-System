@@ -39,21 +39,20 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String
-  email         String         @unique
+  email         String    @unique
   emailVerified DateTime?
   password      String?
   image         String?
-  role          UserRole       @default(USER)
+  role          UserRole  @default(USER)
   profile       Profile?
   accounts      Account[]
   sessions      Session[]
   topic         Topic[]
   event         Event[]
-  events        UsersOnEvent[]
+  // events        UsersOnEvent[]
   comment       Comment[]
-  degree        Degree[]
   gallery       Gallery[]
   likes         Like[]
 }
@@ -62,7 +61,8 @@ model Profile {
   id                  String    @id @default(cuid())
   username            String
   bio                 String
-  degreeId            String
+  department          String
+  degree              String
   resultPublishedDate DateTime? @db.Date
   jobStatus           JobStatus @default(UNEMPLOYED)
   designation         String?
@@ -70,22 +70,12 @@ model Profile {
   joiningDate         DateTime? @db.Date
   userId              String    @unique
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  degree Degree @relation(fields: [degreeId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum JobStatus {
   EMPLOYED
   UNEMPLOYED
-}
-
-model Degree {
-  id               String    @id @default(cuid())
-  name             String    @unique
-  department       String
-  createdByUserId  String
-  createdByUser    User      @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
-  BelongsToProfile Profile[]
 }
 
 enum UserRole {
@@ -102,34 +92,34 @@ model VerificationToken {
 }
 
 model Event {
-  id          String         @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   userId      String
-  attendees   UsersOnEvent[]
-  date        DateTime       @db.Timestamptz(3)
-  description String         @db.Text
+  // attendees   UsersOnEvent[]
+  date        DateTime @db.Timestamptz(3)
+  description String   @db.Text
   banner      String
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   organizedBy User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model UsersOnEvent {
-  event   Event  @relation(fields: [eventId], references: [id])
-  eventId String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+// model UsersOnEvent {
+//   event   Event  @relation(fields: [eventId], references: [id])
+//   eventId String
+//   user    User   @relation(fields: [userId], references: [id])
+//   userId  String
 
-  @@id([userId, eventId])
-}
+//   @@id([userId, eventId])
+// }
 
 model Topic {
   id        String    @id @default(cuid())
   title     String
   details   String
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes     Like[]
   comments  Comment[]
   createdAt DateTime  @default(now())
@@ -149,8 +139,8 @@ model Comment {
   body      String
   userId    String
   topicId   String
-  topic     Topic    @relation(fields: [topicId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -160,7 +150,7 @@ model Gallery {
   title     String
   photo     String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

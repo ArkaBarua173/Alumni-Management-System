@@ -12,12 +12,12 @@ const schema = yup.object().shape({
     .required("Bio cannot leave empty while updating bio")
     .test(
       "len",
-      "can be empty or with string at least 10 characters and not more than 250",
+      "can be empty or with string at least 10 characters and not more than 300",
       (val) => {
         if (val === undefined) {
           return true;
         }
-        return val.length == 0 || (val.length >= 10 && val.length <= 250);
+        return val.length == 0 || (val.length >= 10 && val.length <= 300);
       }
     ),
 });
@@ -82,11 +82,8 @@ export default function UserNameForm() {
   return (
     <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
       {/* <p>{data}</p> */}
-      <label
-        htmlFor="bio"
-        className="block text-base font-medium text-gray-700 ml-1"
-      >
-        Bio
+      <label htmlFor="bio" className="block label">
+        <span className="label-text font-bold">Bio</span>
       </label>
       <div className="mt-1 flex gap-4">
         <textarea
@@ -94,7 +91,7 @@ export default function UserNameForm() {
           cols="30"
           rows="10"
           placeholder={data?.bio}
-          className="w-full border-gray-300 rounded-sm shadow-sm h-32"
+          className="w-full input input-bordered h-32"
           {...register("bio")}
         ></textarea>
         <button

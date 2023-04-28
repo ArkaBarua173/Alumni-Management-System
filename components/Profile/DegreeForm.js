@@ -8,12 +8,8 @@ import toast from "react-hot-toast";
 import Loading from "../Loading";
 import { format, parseISO } from "date-fns";
 
-const getDepartments = async () => {
-  const response = await axios.get("/api/profile/degrees/getdepartments");
-  return response.data.data;
-};
-const getProfileDegree = async () => {
-  const response = await axios.get("/api/profile/getProfileDegree");
+const getDegreeInfo = async () => {
+  const response = await axios.get("/api/profile/getDegreeInfo");
   return response.data.data;
 };
 
@@ -21,19 +17,12 @@ export default function UserNameForm() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isSelectDisabled, setIsSelectDisabled] = useState(true);
   const [degrees, setDegrees] = useState([]);
-  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery({
-    queryFn: getDepartments,
-    queryKey: ["departments"],
+    queryFn: getDegreeInfo,
+    queryKey: ["getDegreeInfo"],
   });
-  const {
-    data: degreeInfo,
-    error: degreeError,
-    isLoading: isDegreeLoading,
-  } = useQuery({
-    queryFn: getProfileDegree,
-    queryKey: ["getProfileDegree"],
-  });
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -57,22 +46,30 @@ export default function UserNameForm() {
       onSuccess: (data) => {
         reset();
         queryClient.invalidateQueries(["getProfileDegree"]);
+        queryClient.invalidateQueries(["getDegreeInfo"]);
         toast.success(`Your Degree has successfully updated`);
       },
     }
   );
 
-  if (isLoading) return <Loading />;
-  if (error) return error;
-
-  if (isDegreeLoading) return <Loading />;
-  if (degreeError) return error;
+  console.log(data);
 
   const handleDepartment = async (e) => {
-    const resDeg = await fetch(`/api/profile/degrees/${e.target.value}`);
-    const getDeg = await resDeg.json();
-    setDegrees(await getDeg);
-    setIsSelectDisabled(false);
+    const department = e.target.value;
+    if (department === "Software Engineering Program")
+      setDegrees([
+        "B.Sc.in Software Engineering",
+        "Post Graduate Diploma in Information Technology (PGDIT)",
+      ]);
+    if (
+      department ===
+      "Department of Computer Science and Telecommunication Engineering"
+    )
+      setDegrees([
+        "B.Sc. Eng. in Computer Science and Telecommunication Engineering",
+        "M.Sc. Eng. in Computer Science and Telecommunication Engineering",
+      ]);
+    setIsDisabled(false);
   };
 
   const onSubmit = async (data) => {
@@ -82,63 +79,64 @@ export default function UserNameForm() {
   };
 
   return (
-    <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-      <label
-        htmlFor="department"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Department
+    <form
+      className="mb-0 space-y-6 form-control"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <label htmlFor="department" className="block label">
+        <span className="label-text font-bold">Department</span>
       </label>
       <div className="mt-1">
         <select
           id="department"
           name="department"
           type="text"
+          defaultValue={""}
           {...register("department")}
           onChange={(e) => handleDepartment(e)}
-          className="w-full border-gray-300 rounded-lg shadow-sm invalid:text-gray-500"
+          className="w-full input input-bordered"
         >
           <option value={""} disabled>
             Choose department
           </option>
-          {data?.map((datum) => (
-            <option value={datum?.department} key={datum?.department}>
-              {datum?.department}
-            </option>
-          ))}
+          <option value={"Software Engineering Program"}>
+            Software Engineering Program
+          </option>
+          <option
+            value={
+              "Department of Computer Science and Telecommunication Engineering"
+            }
+          >
+            Department of Computer Science and Telecommunication Engineering
+          </option>
         </select>
         <p className="text-red-700 ml-1 mt-1">{errors.department?.message}</p>
       </div>
-      <label
-        htmlFor="degree"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Degree
+      <label htmlFor="degree" className="block label">
+        <span className="label-text font-bold">Degree</span>
       </label>
       <div className="mt-1">
         <select
           id="degree"
           type="text"
-          disabled={isSelectDisabled}
-          className="w-full border-gray-300 rounded-lg shadow-sm invalid:text-gray-500"
+          defaultValue={""}
+          disabled={isDisabled}
+          className="w-full input input-bordered"
           {...register("degree")}
         >
           <option value={""} disabled>
             Choose degree
           </option>
-          {degrees?.data?.map((degree) => (
-            <option value={degree.name} key={degree.name}>
-              {degree.name}
+          {degrees?.map((degree) => (
+            <option value={degree} key={degree}>
+              {degree}
             </option>
           ))}
         </select>
         <p className="text-red-700 ml-1 mt-1">{errors.degree?.message}</p>
       </div>
-      <label
-        htmlFor="joiningDate"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Result Published Date
+      <label htmlFor="resultPublishedDate" className="block label">
+        <span className="label-text font-bold">Result Published Date</span>
       </label>
       <div className="mt-1">
         <input
@@ -148,7 +146,8 @@ export default function UserNameForm() {
           max={format(new Date(), "y-LL-cc")}
           onFocus={(e) => (e.target.type = "date")}
           onBlur={(e) => (e.target.type = "text")}
-          className="w-full border-gray-300 rounded-lg shadow-sm"
+          placeholder="2011-06-01"
+          className="w-full input input-bordered"
           {...register("resultPublishedDate")}
         />
         <p className="text-red-700 ml-1 mt-1">

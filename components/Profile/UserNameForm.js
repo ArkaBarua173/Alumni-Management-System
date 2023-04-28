@@ -64,12 +64,12 @@ export default function UserNameForm() {
   };
 
   return (
-    <form className="mb-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-      <label
-        htmlFor="username"
-        className="block text-base font-medium text-gray-700 ml-1"
-      >
-        Username
+    <form
+      className="mb-0 space-y-6 form-control"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <label htmlFor="username" className="block label">
+        <span className="label-text font-bold">Username</span>
       </label>
       <div className="mt-1 flex gap-4">
         <input
@@ -77,7 +77,7 @@ export default function UserNameForm() {
           type="text"
           required
           placeholder={data?.username}
-          className="w-full flex-1 border-gray-300 rounded-sm shadow-sm"
+          className="w-full input input-bordered"
           {...register("username")}
         />
         <button

@@ -8,19 +8,14 @@ const handler = async (req, res) => {
     if (!session)
       return res.status(401).json({ message: "Login to change degree info" });
 
-    const { degree, resultPublishedDate } = req.body;
-    const userDegree = await prisma.degree.findUnique({
-      select: { id: true },
-      where: {
-        name: degree,
-      },
-    });
+    const { department, degree, resultPublishedDate } = req.body;
 
     try {
       const updatedDegree = await prisma.profile.update({
         where: { userId: session?.id },
         data: {
-          degreeId: userDegree?.id,
+          department,
+          degree,
           resultPublishedDate: new Date(resultPublishedDate).toISOString(),
         },
       });

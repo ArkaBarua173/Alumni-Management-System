@@ -17,7 +17,8 @@ const handler = async (req, res) => {
     const {
       username,
       bio,
-      degree: name,
+      degree,
+      department,
       resultPublishedDate,
       jobStatus,
       designation,
@@ -26,15 +27,13 @@ const handler = async (req, res) => {
     } = req.body;
 
     try {
-      const selectedDegree = await prisma.degree.findUnique({
-        where: { name },
-      });
       if (req.body.jobStatus === "EMPLOYED") {
         const createdProfile = await prisma.profile.create({
           data: {
             username,
             bio,
-            degreeId: selectedDegree?.id,
+            degree,
+            department,
             resultPublishedDate: new Date(resultPublishedDate).toISOString(),
             jobStatus,
             designation,
@@ -49,7 +48,8 @@ const handler = async (req, res) => {
           data: {
             username,
             bio,
-            degreeId: selectedDegree?.id,
+            degree,
+            department,
             resultPublishedDate: new Date(resultPublishedDate).toISOString(),
             jobStatus,
             userId: user?.id,
