@@ -14,11 +14,25 @@ export default async function handler(req, res) {
 
   try {
     const eventCount = await prisma.event.count();
+    const upcomingEventCount = await prisma.event.count({
+      where: {
+        date: {
+          gte: new Date(Date.now()), // replace with your desired date
+        },
+      },
+    });
     const topicCount = await prisma.topic.count();
     const userCount = await prisma.user.count();
     const galleryCount = await prisma.gallery.count();
-    res.status(200).json({ eventCount, topicCount, userCount, galleryCount });
+    res.status(200).json({
+      eventCount,
+      upcomingEventCount,
+      topicCount,
+      userCount,
+      galleryCount,
+    });
   } catch (err) {
+    console.log(err);
     res
       .status(403)
       .json({ err: "Error has occured while performing this action" });

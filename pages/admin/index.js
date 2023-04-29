@@ -28,7 +28,7 @@ export default function Dashboard() {
           <div className="card w-80 bg-orange-600 text-base-content">
             <div className="card-body">
               <h2 className="card-title">Upcoming Events</h2>
-              <p>{data?.eventCount} Upcoming events</p>
+              <p>{data?.upcomingEventCount} Upcoming events</p>
               <div className="card-actions justify-end">
                 <button
                   className="btn btn-outline text-white"

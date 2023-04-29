@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -38,6 +38,12 @@ export default function Home() {
 
   if (isEventError) return isEventError;
   if (isTopicError) return isTopicError;
+
+  const upcomingEvent = events?.filter(
+    (event) => new Date(event?.date).getTime() > Date.now()
+  );
+
+  console.log(upcomingEvent);
 
   return (
     <>
@@ -85,7 +91,7 @@ export default function Home() {
       {/* Events */}
       <h1 className="m-4 p-8 text-4xl text-center font-bold">Upcoming Event</h1>
       <div className="carousel mx-8 rounded-md">
-        {events?.map((datum) => (
+        {upcomingEvent?.map((datum) => (
           <div
             id={`${datum?.id}`}
             className="carousel-item w-full"

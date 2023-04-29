@@ -2,7 +2,7 @@ import AdminDashboard from "@/components/AdminDashboard";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -44,6 +44,7 @@ const schema = yup.object().shape({
 export default function EditEvent({ id, title, banner, date, description }) {
   const [err, setErr] = useState("");
   const { replace } = useRouter();
+  const queryClient = useQueryClient();
 
   const defaultValues = {
     title,
@@ -66,6 +67,9 @@ export default function EditEvent({ id, title, banner, date, description }) {
       onSuccess: (data) => {
         console.log(data);
         replace("/admin/events");
+        queryClient.invalidateQueries(["events"]);
+        queryClient.invalidateQueries(["EventFetch"]);
+        queryClient.invalidateQueries(["getModelCount"]);
       },
     }
   );
