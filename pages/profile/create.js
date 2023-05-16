@@ -1,14 +1,13 @@
 import { getSession } from "next-auth/react";
-import Layout from "@/components/Layout";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Loading from "@/components/Loading";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
+import UserProfileLayout from "@/components/UserProfileLayout";
 
 const schema = yup.object().shape({
   username: yup.string().required(),
@@ -112,7 +111,7 @@ export default function Create() {
 
   return (
     <>
-      <Layout />
+      <UserProfileLayout />
       <div className="my-10 max-w-2xl sm:mx-auto sm:w-full">
         <h1 className="my-3 text-center text-lg font-bold">
           Create your profile

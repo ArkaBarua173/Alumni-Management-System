@@ -6,7 +6,7 @@ import { RiDiscussFill } from "react-icons/ri";
 import { ImExit } from "react-icons/im";
 import { signOut } from "next-auth/react";
 
-export default function Layout({ children }) {
+export default function UserProfileLayout({ children }) {
   const { pathname } = useRouter();
   return (
     <>
