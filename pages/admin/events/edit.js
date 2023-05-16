@@ -52,6 +52,7 @@ export default function EditEvent({ id, title, banner, date, description }) {
     banner: "",
     description,
   };
+
   const { mutate } = useMutation(
     async (form) =>
       await axios.put("/api/events/edit", form, {
