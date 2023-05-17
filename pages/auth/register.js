@@ -46,7 +46,7 @@ export default function Register() {
     await fetch("/api/auth/signup", options)
       .then((res) => res.json())
       .then((data) => {
-        if (data) push("http://localhost:3000");
+        if (data) push("/");
       });
     setIsDisable(false);
   };

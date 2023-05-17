@@ -31,7 +31,7 @@ export default function Signin() {
       redirect: false,
       email: data.email,
       password: data.password,
-      callbackUrl: "http://localhost:3000",
+      callbackUrl: "/",
     });
 
     if (status.error) {
@@ -46,7 +46,7 @@ export default function Signin() {
   };
 
   async function handleGoogleSignin() {
-    signIn("google", { callbackUrl: "http://localhost:3000" });
+    signIn("google", { callbackUrl: "/" });
   }
 
   return (
