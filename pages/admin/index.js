@@ -4,9 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
 const getModelCount = async () => {
-  const response = await axios.get(
-    "http://localhost:3000/api/count/countModel"
-  );
+  const response = await axios.get("/api/count/countModel");
   return response.data;
 };
 export default function Dashboard() {

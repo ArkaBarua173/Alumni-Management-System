@@ -20,8 +20,7 @@ export default function TopicId() {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(
-    async (data) =>
-      await axios.post("http://localhost:3000/api/forum/addComment", data),
+    async (data) => await axios.post("/api/forum/addComment", data),
     {
       onError: (error) => {
         setIsDisabled(false);
@@ -39,7 +38,7 @@ export default function TopicId() {
   const { query } = useRouter();
   const { pid } = query;
   const getTopic = async () => {
-    const response = await axios.get(`http://localhost:3000/api/forum/${pid}`);
+    const response = await axios.get(`/api/forum/${pid}`);
     return response.data.data;
   };
 

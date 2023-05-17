@@ -8,12 +8,12 @@ import Loading from "@/components/Loading";
 import CarouselEvent from "@/components/CarouselEvent";
 
 const getEvents = async () => {
-  const response = await axios.get(`http://localhost:3000/api/events/eventhm`);
+  const response = await axios.get(`/api/events/eventhm`);
   return response.data.data;
 };
 
 const getTopics = async () => {
-  const response = await axios.get(`http://localhost:3000/api/forum/forumhm`);
+  const response = await axios.get(`/api/forum/forumhm`);
   return response.data.data;
 };
 

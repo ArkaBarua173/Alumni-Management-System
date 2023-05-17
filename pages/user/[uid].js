@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 export default function User() {
   const getUserData = async (uid) => {
-    const response = await axios.get(`http://localhost:3000/api/user/${uid}`);
+    const response = await axios.get(`/api/user/${uid}`);
     return response.data.data;
   };
   const { query } = useRouter();

@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const getPhotos = async () => {
-  const response = await axios.get("http://localhost:3000/api/gallery");
+  const response = await axios.get("/api/gallery");
   return response.data.data;
 };
 

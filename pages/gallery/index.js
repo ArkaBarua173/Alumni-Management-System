@@ -12,7 +12,7 @@ const LightGallery = dynamic(() => import("lightgallery/react"), {
 });
 
 const getPhotos = async () => {
-  const response = await axios.get("http://localhost:3000/api/gallery");
+  const response = await axios.get("/api/gallery");
   return response.data.data;
 };
 

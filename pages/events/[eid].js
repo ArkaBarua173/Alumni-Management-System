@@ -11,7 +11,7 @@ export default function Events() {
   const { query } = useRouter();
   const { eid } = query;
   const getEvent = async () => {
-    const response = await axios.get(`http://localhost:3000/api/events/${eid}`);
+    const response = await axios.get(`/api/events/${eid}`);
     return response.data.data;
   };
   const { isLoading, error, data } = useQuery({

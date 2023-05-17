@@ -5,9 +5,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import Loading from "../Loading";
 
 const getTopicLikes = async (topicId) => {
-  const response = await axios.get(
-    `http://localhost:3000/api/forum/like/${topicId}`
-  );
+  const response = await axios.get(`/api/forum/like/${topicId}`);
   return response.data.data;
 };
 

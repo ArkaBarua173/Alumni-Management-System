@@ -6,7 +6,7 @@ import Loading from "@/components/Loading";
 import SingleForum from "@/components/SingleForum";
 
 const getTopics = async () => {
-  const response = await axios.get("http://localhost:3000/api/forum");
+  const response = await axios.get("/api/forum");
   return response.data.data;
 };
 

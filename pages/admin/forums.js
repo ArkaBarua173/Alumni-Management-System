@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const getTopics = async () => {
-  const response = await axios.get("http://localhost:3000/api/forum");
+  const response = await axios.get("/api/forum");
   return response.data.data;
 };
 

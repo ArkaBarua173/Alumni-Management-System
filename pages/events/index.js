@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const getEvents = async () => {
-  const response = await axios.get("http://localhost:3000/api/events");
+  const response = await axios.get("/api/events");
   return response.data.data;
 };
 

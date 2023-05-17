@@ -6,9 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const getAllUsers = async () => {
-  const response = await axios.get(
-    `http://localhost:3000/api/user/getAllUsers`
-  );
+  const response = await axios.get(`/api/user/getAllUsers`);
   return response.data.data;
 };
 
